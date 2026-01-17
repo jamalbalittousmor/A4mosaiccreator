@@ -44,7 +44,6 @@
             line-height: 1.5;
         }
         
-        /* Шапка */
         .header {
             background: linear-gradient(135deg, var(--primary), #6C5CE7);
             color: white;
@@ -53,25 +52,15 @@
             box-shadow: var(--shadow);
         }
         
-        .header h1 {
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 8px;
-        }
+        .header h1 { font-size: 2rem; font-weight: 700; margin-bottom: 8px; }
+        .header p { opacity: 0.9; font-size: 1.1rem; }
         
-        .header p {
-            opacity: 0.9;
-            font-size: 1.1rem;
-        }
-        
-        /* Основной контейнер */
         .container {
             max-width: 1400px;
             margin: 0 auto;
             padding: 24px;
         }
         
-        /* Шаги */
         .steps {
             display: flex;
             justify-content: center;
@@ -92,17 +81,8 @@
             transition: all 0.3s;
         }
         
-        .step.active {
-            opacity: 1;
-            background: var(--primary);
-            color: white;
-        }
-        
-        .step.completed {
-            opacity: 1;
-            background: var(--success);
-            color: white;
-        }
+        .step.active { opacity: 1; background: var(--primary); color: white; }
+        .step.completed { opacity: 1; background: var(--success); color: white; }
         
         .step-number {
             width: 36px;
@@ -116,12 +96,6 @@
             font-size: 1.1rem;
         }
         
-        .step.active .step-number,
-        .step.completed .step-number {
-            background: rgba(255,255,255,0.3);
-        }
-        
-        /* Карточки */
         .card {
             background: var(--card);
             border-radius: var(--radius);
@@ -139,11 +113,6 @@
             gap: 12px;
         }
         
-        .card-title .icon {
-            font-size: 1.6rem;
-        }
-        
-        /* Зона загрузки */
         .upload-zone {
             border: 3px dashed var(--border);
             border-radius: var(--radius);
@@ -154,140 +123,172 @@
             background: linear-gradient(135deg, #f8f9fa, #fff);
         }
         
-        .upload-zone:hover,
-        .upload-zone.dragover {
+        .upload-zone:hover, .upload-zone.dragover {
             border-color: var(--primary);
             background: linear-gradient(135deg, #e8f4fd, #fff);
             transform: scale(1.01);
         }
         
-        .upload-zone .icon {
-            font-size: 4rem;
-            margin-bottom: 20px;
-        }
+        .upload-zone .icon { font-size: 4rem; margin-bottom: 20px; }
+        .upload-zone h3 { font-size: 1.5rem; margin-bottom: 12px; }
+        .upload-zone p { color: var(--text-light); font-size: 1.1rem; }
+        .upload-zone input { display: none; }
         
-        .upload-zone h3 {
-            font-size: 1.5rem;
-            margin-bottom: 12px;
-        }
-        
-        .upload-zone p {
-            color: var(--text-light);
-            font-size: 1.1rem;
-        }
-        
-        .upload-zone input {
-            display: none;
-        }
-        
-        /* Двухколоночный макет */
         .two-columns {
             display: grid;
-            grid-template-columns: 1fr 400px;
+            grid-template-columns: 1fr 420px;
             gap: 24px;
             align-items: start;
         }
         
-        @media (max-width: 1000px) {
-            .two-columns {
-                grid-template-columns: 1fr;
-            }
+        @media (max-width: 1100px) {
+            .two-columns { grid-template-columns: 1fr; }
         }
         
-        /* Превью */
-        .preview-container {
-            position: relative;
+        /* ===== ПРЕВЬЮ ===== */
+        .preview-section {
             background: #1a1a2e;
             border-radius: var(--radius);
-            overflow: hidden;
-            min-height: 400px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .preview-wrapper {
+            padding: 20px;
             position: relative;
-            max-width: 100%;
-            max-height: 600px;
         }
         
-        .preview-image {
-            max-width: 100%;
-            max-height: 600px;
-            display: block;
-        }
-        
-        .grid-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-        }
-        
-        .grid-cell {
-            position: absolute;
-            border: 2px solid rgba(255, 255, 255, 0.8);
-            box-sizing: border-box;
+        .preview-header {
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            justify-content: center;
-            background: rgba(74, 144, 217, 0.1);
+            margin-bottom: 16px;
+            color: white;
         }
         
-        .grid-cell-label {
-            background: rgba(0,0,0,0.7);
-            color: white;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            font-weight: 600;
+        .preview-header h3 {
+            font-size: 1.1rem;
+            font-weight: 500;
         }
         
-        /* Информация о размере */
-        .size-info {
-            position: absolute;
-            bottom: 16px;
-            left: 16px;
-            right: 16px;
-            background: rgba(0,0,0,0.8);
-            color: white;
-            padding: 16px;
-            border-radius: 12px;
+        .preview-stats {
             display: flex;
-            justify-content: space-around;
-            flex-wrap: wrap;
-            gap: 12px;
+            gap: 20px;
+            font-size: 0.9rem;
         }
         
-        .size-info-item {
+        .preview-stat {
             text-align: center;
         }
         
-        .size-info-label {
-            font-size: 0.85rem;
-            opacity: 0.7;
-            margin-bottom: 4px;
+        .preview-stat-value {
+            font-weight: 600;
+            font-size: 1.1rem;
         }
         
-        .size-info-value {
-            font-size: 1.1rem;
-            font-weight: 600;
+        .preview-stat-label {
+            opacity: 0.7;
+            font-size: 0.8rem;
         }
         
         .quality-good { color: #27AE60; }
         .quality-medium { color: #F39C12; }
         .quality-bad { color: #E74C3C; }
         
-        /* Настройки */
-        .settings-group {
-            margin-bottom: 24px;
+        .preview-canvas-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 300px;
+            background: #2d2d44;
+            border-radius: 12px;
+            overflow: hidden;
         }
         
-        .settings-group:last-child {
-            margin-bottom: 0;
+        .preview-canvas-wrapper {
+            position: relative;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+        }
+        
+        #previewCanvas {
+            display: block;
+            background: white;
+        }
+        
+        .grid-lines {
+            position: absolute;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+        }
+        
+        .preview-dimensions {
+            position: absolute;
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .dim-width {
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .dim-height {
+            right: -70px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        
+        .sheet-label {
+            position: absolute;
+            background: rgba(255,255,255,0.95);
+            color: #333;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            pointer-events: none;
+        }
+        
+        .preview-legend {
+            display: flex;
+            gap: 20px;
+            margin-top: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: rgba(255,255,255,0.8);
+            font-size: 0.85rem;
+        }
+        
+        .legend-color {
+            width: 16px;
+            height: 16px;
+            border-radius: 4px;
+        }
+        
+        .legend-full { background: rgba(74, 144, 217, 0.3); border: 2px solid rgba(74, 144, 217, 0.8); }
+        .legend-partial { background: rgba(255, 193, 7, 0.3); border: 2px solid rgba(255, 193, 7, 0.8); }
+        .legend-overlap { background: rgba(46, 204, 113, 0.4); border: 2px dashed rgba(46, 204, 113, 0.8); }
+        
+        .preview-actions {
+            margin-top: 16px;
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        
+        .preview-actions .btn { flex: 1; min-width: 140px; }
+        
+        /* ===== НАСТРОЙКИ ===== */
+        .settings-group {
+            margin-bottom: 24px;
         }
         
         .settings-label {
@@ -299,12 +300,13 @@
             font-size: 1.1rem;
         }
         
-        /* Селекторы формата */
         .format-selector {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 10px;
         }
+        
+        .format-selector.three-cols { grid-template-columns: repeat(3, 1fr); }
         
         .format-btn {
             padding: 14px;
@@ -317,18 +319,9 @@
             font-size: 1rem;
         }
         
-        .format-btn:hover {
-            border-color: var(--primary);
-            background: #f0f7ff;
-        }
+        .format-btn:hover { border-color: var(--primary); background: #f0f7ff; }
+        .format-btn.active { border-color: var(--primary); background: var(--primary); color: white; }
         
-        .format-btn.active {
-            border-color: var(--primary);
-            background: var(--primary);
-            color: white;
-        }
-        
-        /* Сетка */
         .grid-selector {
             display: flex;
             align-items: center;
@@ -346,16 +339,8 @@
             font-weight: 600;
         }
         
-        .grid-input:focus {
-            outline: none;
-            border-color: var(--primary);
-        }
-        
-        .grid-x {
-            font-size: 1.5rem;
-            font-weight: 300;
-            color: var(--text-light);
-        }
+        .grid-input:focus { outline: none; border-color: var(--primary); }
+        .grid-x { font-size: 1.5rem; font-weight: 300; color: var(--text-light); }
         
         .auto-btn {
             padding: 12px 20px;
@@ -369,17 +354,9 @@
             transition: all 0.2s;
         }
         
-        .auto-btn:hover {
-            background: #219a52;
-            transform: translateY(-2px);
-        }
+        .auto-btn:hover { background: #219a52; transform: translateY(-2px); }
         
-        /* Переключатели */
-        .toggle-group {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
+        .toggle-group { display: flex; flex-direction: column; gap: 16px; }
         
         .toggle-item {
             display: flex;
@@ -390,29 +367,21 @@
             border-radius: 12px;
         }
         
-        .toggle-label {
-            font-size: 1rem;
-        }
+        .toggle-label { font-size: 1rem; }
         
         .toggle-switch {
             position: relative;
             width: 60px;
             height: 32px;
             cursor: pointer;
+            flex-shrink: 0;
         }
         
-        .toggle-switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
+        .toggle-switch input { opacity: 0; width: 0; height: 0; }
         
         .toggle-slider {
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
+            top: 0; left: 0; right: 0; bottom: 0;
             background: #ccc;
             border-radius: 32px;
             transition: 0.3s;
@@ -431,28 +400,32 @@
             box-shadow: 0 2px 4px rgba(0,0,0,0.2);
         }
         
-        .toggle-switch input:checked + .toggle-slider {
-            background: var(--primary);
-        }
+        .toggle-switch input:checked + .toggle-slider { background: var(--primary); }
+        .toggle-switch input:checked + .toggle-slider:before { transform: translateX(28px); }
         
-        .toggle-switch input:checked + .toggle-slider:before {
-            transform: translateX(28px);
-        }
-        
-        /* Слайдер нахлёста */
-        .overlap-slider {
+        .expandable-panel {
             margin-top: 12px;
-            padding: 16px;
+            padding: 20px;
             background: #e8f4fd;
             border-radius: 12px;
             display: none;
         }
         
-        .overlap-slider.visible {
-            display: block;
+        .expandable-panel.visible { display: block; }
+        
+        .slider-group { margin-bottom: 16px; }
+        .slider-group:last-child { margin-bottom: 0; }
+        
+        .slider-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
         }
         
-        .overlap-slider input[type="range"] {
+        .slider-value { font-weight: 600; color: var(--primary); }
+        
+        input[type="range"] {
             width: 100%;
             height: 8px;
             border-radius: 4px;
@@ -461,27 +434,75 @@
             -webkit-appearance: none;
         }
         
-        .overlap-slider input[type="range"]::-webkit-slider-thumb {
+        input[type="range"]::-webkit-slider-thumb {
             -webkit-appearance: none;
             width: 24px;
             height: 24px;
             border-radius: 50%;
             background: var(--primary);
             cursor: pointer;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
         }
         
-        .overlap-value {
-            text-align: center;
-            margin-top: 8px;
-            font-weight: 600;
-        }
-        
-        /* Кнопки действий */
-        .actions {
+        .preset-buttons {
             display: flex;
-            gap: 12px;
-            margin-top: 24px;
+            gap: 8px;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
         }
+        
+        .preset-btn {
+            padding: 8px 16px;
+            border: 2px solid var(--border);
+            border-radius: 20px;
+            background: white;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+        
+        .preset-btn:hover { border-color: var(--primary); }
+        .preset-btn.active { background: var(--primary); border-color: var(--primary); color: white; }
+        
+        .dpi-selector {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 12px;
+        }
+        
+        .dpi-btn {
+            padding: 8px 16px;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+        
+        .dpi-btn:hover { border-color: var(--primary); }
+        .dpi-btn.active { background: var(--primary); border-color: var(--primary); color: white; }
+        
+        .resolution-info {
+            background: #fff;
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 12px;
+            font-size: 0.9rem;
+        }
+        
+        .resolution-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 4px;
+        }
+        
+        .resolution-row:last-child { margin-bottom: 0; }
+        .resolution-label { color: var(--text-light); }
+        .resolution-value { font-weight: 600; }
+        
+        .actions { display: flex; gap: 12px; margin-top: 24px; }
         
         .btn {
             flex: 1;
@@ -508,14 +529,8 @@
             box-shadow: 0 8px 25px rgba(74, 144, 217, 0.4);
         }
         
-        .btn-secondary {
-            background: #f0f0f0;
-            color: var(--text);
-        }
-        
-        .btn-secondary:hover {
-            background: #e0e0e0;
-        }
+        .btn-secondary { background: #f0f0f0; color: var(--text); }
+        .btn-secondary:hover { background: #e0e0e0; }
         
         .btn:disabled {
             opacity: 0.5;
@@ -523,31 +538,18 @@
             transform: none !important;
         }
         
-        /* Формат экспорта */
-        .export-format {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-        
-        /* Модальное окно кроппера */
+        /* ===== МОДАЛКИ ===== */
         .modal {
             display: none;
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
             background: rgba(0,0,0,0.9);
             z-index: 1000;
             padding: 20px;
         }
         
-        .modal.active {
-            display: flex;
-            flex-direction: column;
-        }
+        .modal.active { display: flex; flex-direction: column; }
         
         .modal-header {
             display: flex;
@@ -558,10 +560,7 @@
             border-radius: 16px 16px 0 0;
         }
         
-        .modal-title {
-            font-size: 1.3rem;
-            font-weight: 600;
-        }
+        .modal-title { font-size: 1.3rem; font-weight: 600; }
         
         .modal-close {
             width: 40px;
@@ -585,10 +584,7 @@
             overflow: hidden;
         }
         
-        .modal-body img {
-            max-width: 100%;
-            max-height: 100%;
-        }
+        .modal-body img { max-width: 100%; max-height: 100%; }
         
         .modal-footer {
             display: flex;
@@ -598,23 +594,19 @@
             border-radius: 0 0 16px 16px;
         }
         
-        /* Прогресс */
+        /* ===== ПРОГРЕСС ===== */
         .progress-overlay {
             display: none;
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
             background: rgba(0,0,0,0.8);
             z-index: 2000;
             align-items: center;
             justify-content: center;
         }
         
-        .progress-overlay.active {
-            display: flex;
-        }
+        .progress-overlay.active { display: flex; }
         
         .progress-card {
             background: white;
@@ -622,33 +614,45 @@
             border-radius: 20px;
             text-align: center;
             max-width: 400px;
+            min-width: 300px;
         }
         
         .progress-spinner {
-            width: 80px;
-            height: 80px;
-            border: 6px solid #f0f0f0;
+            width: 60px;
+            height: 60px;
+            border: 5px solid #f0f0f0;
             border-top-color: var(--primary);
             border-radius: 50%;
             animation: spin 1s linear infinite;
-            margin: 0 auto 24px;
+            margin: 0 auto 20px;
         }
         
-        @keyframes spin {
-            to { transform: rotate(360deg); }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        
+        .progress-text { font-size: 1.1rem; color: var(--text); margin-bottom: 16px; }
+        
+        .progress-bar-container {
+            background: #eee;
+            border-radius: 10px;
+            height: 12px;
+            overflow: hidden;
         }
         
-        .progress-text {
-            font-size: 1.2rem;
-            color: var(--text);
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(135deg, var(--primary), #6C5CE7);
+            width: 0%;
+            transition: width 0.2s;
         }
         
-        /* Скрытый блок */
-        .hidden {
-            display: none !important;
+        .progress-details {
+            margin-top: 12px;
+            font-size: 0.9rem;
+            color: var(--text-light);
         }
         
-        /* Информационные бейджи */
+        .hidden { display: none !important; }
+        
         .badge {
             display: inline-block;
             padding: 4px 12px;
@@ -657,12 +661,8 @@
             font-weight: 500;
         }
         
-        .badge-info {
-            background: #e8f4fd;
-            color: var(--primary);
-        }
+        .badge-info { background: #e8f4fd; color: var(--primary); }
         
-        /* Подсказки */
         .hint {
             background: #fffbea;
             border-left: 4px solid var(--warning);
@@ -672,61 +672,46 @@
             font-size: 0.95rem;
         }
         
-        .hint-title {
-            font-weight: 600;
-            margin-bottom: 4px;
+        .hint-title { font-weight: 600; margin-bottom: 4px; }
+        
+        .settings-scroll {
+            max-height: calc(100vh - 200px);
+            overflow-y: auto;
+            padding-right: 8px;
         }
         
-        /* Футер */
-        .footer {
-            text-align: center;
-            padding: 24px;
-            color: var(--text-light);
+        .settings-scroll::-webkit-scrollbar { width: 6px; }
+        .settings-scroll::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 3px; }
+        .settings-scroll::-webkit-scrollbar-thumb { background: #ccc; border-radius: 3px; }
+        
+        .error-message {
+            background: #ffe0e0;
+            border: 1px solid var(--danger);
+            color: var(--danger);
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-top: 12px;
             font-size: 0.95rem;
         }
         
-        /* Адаптивность */
         @media (max-width: 768px) {
-            .header h1 {
-                font-size: 1.5rem;
-            }
-            
-            .steps {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .card {
-                padding: 20px;
-            }
-            
-            .upload-zone {
-                padding: 40px 20px;
-            }
-            
-            .format-selector {
-                grid-template-columns: 1fr;
-            }
-            
-            .export-format {
-                grid-template-columns: 1fr;
-            }
-            
-            .actions {
-                flex-direction: column;
-            }
+            .header h1 { font-size: 1.5rem; }
+            .steps { flex-direction: column; align-items: center; }
+            .card { padding: 20px; }
+            .upload-zone { padding: 40px 20px; }
+            .format-selector, .format-selector.three-cols { grid-template-columns: 1fr; }
+            .actions { flex-direction: column; }
+            .preview-stats { flex-direction: column; gap: 8px; }
         }
     </style>
 </head>
 <body>
-    <!-- Шапка -->
     <header class="header">
         <h1>🧩 Постер-Мозаика</h1>
         <p>Разбейте любую картинку на листы A4 и напечатайте огромный постер!</p>
     </header>
     
     <main class="container">
-        <!-- Шаги -->
         <div class="steps">
             <div class="step active" id="step1">
                 <div class="step-number">1</div>
@@ -738,11 +723,11 @@
             </div>
             <div class="step" id="step3">
                 <div class="step-number">3</div>
-                <span>Скачайте и печатайте</span>
+                <span>Скачайте</span>
             </div>
         </div>
         
-        <!-- Зона загрузки (Шаг 1) -->
+        <!-- Загрузка -->
         <div class="card" id="uploadCard">
             <div class="upload-zone" id="uploadZone">
                 <div class="icon">📁</div>
@@ -751,45 +736,61 @@
                 <p style="margin-top: 12px;"><span class="badge badge-info">JPG, PNG, WebP до 50 МБ</span></p>
                 <input type="file" id="fileInput" accept="image/*">
             </div>
+            <div class="error-message hidden" id="uploadError"></div>
         </div>
         
-        <!-- Редактор (Шаг 2) -->
+        <!-- Редактор -->
         <div class="hidden" id="editorSection">
             <div class="two-columns">
                 <!-- Превью -->
                 <div class="card">
-                    <div class="card-title">
-                        <span class="icon">🖼️</span>
-                        Предпросмотр постера
-                    </div>
-                    <div class="preview-container" id="previewContainer">
-                        <div class="preview-wrapper" id="previewWrapper">
-                            <img id="previewImage" class="preview-image" src="" alt="Preview">
-                            <div class="grid-overlay" id="gridOverlay"></div>
+                    <div class="preview-section">
+                        <div class="preview-header">
+                            <h3>📐 Схема разбивки</h3>
+                            <div class="preview-stats">
+                                <div class="preview-stat">
+                                    <div class="preview-stat-value" id="statPosterSize">—</div>
+                                    <div class="preview-stat-label">Размер постера</div>
+                                </div>
+                                <div class="preview-stat">
+                                    <div class="preview-stat-value" id="statSheets">—</div>
+                                    <div class="preview-stat-label">Листов</div>
+                                </div>
+                                <div class="preview-stat">
+                                    <div class="preview-stat-value" id="statQuality">—</div>
+                                    <div class="preview-stat-label">Качество</div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="size-info" id="sizeInfo">
-                            <div class="size-info-item">
-                                <div class="size-info-label">Размер постера</div>
-                                <div class="size-info-value" id="posterSize">—</div>
+                        
+                        <div class="preview-canvas-container">
+                            <div class="preview-canvas-wrapper" id="previewWrapper">
+                                <canvas id="previewCanvas"></canvas>
+                                <svg class="grid-lines" id="gridLines"></svg>
+                                <div class="preview-dimensions dim-width" id="dimWidth">—</div>
+                                <div class="preview-dimensions dim-height" id="dimHeight">—</div>
                             </div>
-                            <div class="size-info-item">
-                                <div class="size-info-label">Листов</div>
-                                <div class="size-info-value" id="sheetsCount">—</div>
+                        </div>
+                        
+                        <div class="preview-legend" id="previewLegend">
+                            <div class="legend-item">
+                                <div class="legend-color legend-full"></div>
+                                <span>Полный лист</span>
                             </div>
-                            <div class="size-info-item">
-                                <div class="size-info-label">Качество печати</div>
-                                <div class="size-info-value" id="printQuality">—</div>
+                            <div class="legend-item hidden" id="legendPartial">
+                                <div class="legend-color legend-partial"></div>
+                                <span>Частичный</span>
+                            </div>
+                            <div class="legend-item hidden" id="legendOverlap">
+                                <div class="legend-color legend-overlap"></div>
+                                <span>Нахлёст</span>
                             </div>
                         </div>
                     </div>
                     
-                    <div style="margin-top: 16px; display: flex; gap: 12px;">
-                        <button class="btn btn-secondary" onclick="openCropper()" style="flex: 1;">
-                            ✂️ Обрезать картинку
-                        </button>
-                        <button class="btn btn-secondary" onclick="resetImage()" style="flex: 1;">
-                            🔄 Загрузить другую
-                        </button>
+                    <div class="preview-actions">
+                        <button class="btn btn-secondary" onclick="openCropper()">✂️ Обрезать</button>
+                        <button class="btn btn-secondary" onclick="resetImage()">🔄 Другая картинка</button>
                     </div>
                 </div>
                 
@@ -800,90 +801,183 @@
                         Настройки
                     </div>
                     
-                    <!-- Формат бумаги -->
-                    <div class="settings-group">
-                        <div class="settings-label">📄 Формат бумаги</div>
-                        <div class="format-selector" id="paperFormat">
-                            <button class="format-btn active" data-format="A4">A4</button>
-                            <button class="format-btn" data-format="A3">A3</button>
-                            <button class="format-btn" data-format="A5">A5</button>
-                            <button class="format-btn" data-format="Letter">Letter</button>
-                        </div>
-                    </div>
-                    
-                    <!-- Ориентация -->
-                    <div class="settings-group">
-                        <div class="settings-label">📐 Ориентация листа</div>
-                        <div class="format-selector" id="orientation">
-                            <button class="format-btn active" data-orientation="portrait">📃 Портрет</button>
-                            <button class="format-btn" data-orientation="landscape">📃 Альбом</button>
-                        </div>
-                    </div>
-                    
-                    <!-- Сетка -->
-                    <div class="settings-group">
-                        <div class="settings-label">🔢 Количество листов</div>
-                        <div class="grid-selector">
-                            <input type="number" class="grid-input" id="gridCols" value="2" min="1" max="20">
-                            <span class="grid-x">×</span>
-                            <input type="number" class="grid-input" id="gridRows" value="2" min="1" max="20">
-                            <button class="auto-btn" onclick="autoGrid()">✨ Авто</button>
-                        </div>
-                    </div>
-                    
-                    <!-- Опции -->
-                    <div class="settings-group">
-                        <div class="settings-label">🎛️ Дополнительно</div>
-                        <div class="toggle-group">
-                            <div class="toggle-item">
-                                <span class="toggle-label">Нумерация фрагментов</span>
-                                <label class="toggle-switch">
-                                    <input type="checkbox" id="showNumbers">
-                                    <span class="toggle-slider"></span>
-                                </label>
-                            </div>
-                            <div class="toggle-item">
-                                <span class="toggle-label">Нахлёст для склейки</span>
-                                <label class="toggle-switch">
-                                    <input type="checkbox" id="enableOverlap">
-                                    <span class="toggle-slider"></span>
-                                </label>
-                            </div>
-                            <div class="overlap-slider" id="overlapSlider">
-                                <input type="range" id="overlapAmount" min="5" max="30" value="15">
-                                <div class="overlap-value"><span id="overlapValue">15</span> мм</div>
+                    <div class="settings-scroll">
+                        <!-- Режим -->
+                        <div class="settings-group">
+                            <div class="settings-label">🖼️ Размещение</div>
+                            <div class="format-selector" id="fitModeSelector">
+                                <button class="format-btn active" data-fitmode="fit">📐 Вписать целиком</button>
+                                <button class="format-btn" data-fitmode="fill">🔲 Заполнить сетку</button>
                             </div>
                         </div>
-                    </div>
-                    
-                    <!-- Формат экспорта -->
-                    <div class="settings-group">
-                        <div class="settings-label">💾 Формат файла</div>
-                        <div class="export-format" id="exportFormat">
-                            <button class="format-btn active" data-export="docx">📄 DOCX</button>
-                            <button class="format-btn" data-export="pdf">📕 PDF</button>
-                            <button class="format-btn" data-export="zip">📦 ZIP</button>
+                        
+                        <!-- Формат -->
+                        <div class="settings-group">
+                            <div class="settings-label">📄 Формат бумаги</div>
+                            <div class="format-selector" id="paperFormatSelector">
+                                <button class="format-btn active" data-format="A4">A4</button>
+                                <button class="format-btn" data-format="A3">A3</button>
+                                <button class="format-btn" data-format="A5">A5</button>
+                                <button class="format-btn" data-format="Letter">Letter</button>
+                            </div>
                         </div>
-                    </div>
-                    
-                    <!-- Кнопка создания -->
-                    <div class="actions">
-                        <button class="btn btn-primary" id="generateBtn" onclick="generateOutput()">
-                            🚀 Создать постер
-                        </button>
-                    </div>
-                    
-                    <div class="hint">
-                        <div class="hint-title">💡 Совет</div>
-                        Для лучшего качества используйте картинки с высоким разрешением. 
-                        Качество "Отлично" означает, что картинка не будет размытой при печати.
+                        
+                        <!-- Ориентация -->
+                        <div class="settings-group">
+                            <div class="settings-label">📐 Ориентация</div>
+                            <div class="format-selector" id="orientationSelector">
+                                <button class="format-btn active" data-orientation="portrait">📃 Портрет</button>
+                                <button class="format-btn" data-orientation="landscape">📃 Альбом</button>
+                            </div>
+                        </div>
+                        
+                        <!-- Сетка -->
+                        <div class="settings-group">
+                            <div class="settings-label">🔢 Листов</div>
+                            <div class="grid-selector">
+                                <input type="number" class="grid-input" id="gridCols" value="2" min="1" max="20">
+                                <span class="grid-x">×</span>
+                                <input type="number" class="grid-input" id="gridRows" value="2" min="1" max="20">
+                                <button class="auto-btn" onclick="autoGrid()">✨ Авто</button>
+                            </div>
+                        </div>
+                        
+                        <!-- Апскейл -->
+                        <div class="settings-group">
+                            <div class="settings-label">🔍 Улучшение качества</div>
+                            <div class="toggle-group">
+                                <div class="toggle-item">
+                                    <span class="toggle-label">Апскейл и обработка</span>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" id="enableUpscale">
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <div class="expandable-panel" id="upscalePanel">
+                                <div class="settings-label" style="font-size: 1rem;">Целевое разрешение (DPI)</div>
+                                <div class="dpi-selector">
+                                    <button class="dpi-btn" data-dpi="72">72</button>
+                                    <button class="dpi-btn active" data-dpi="150">150</button>
+                                    <button class="dpi-btn" data-dpi="300">300</button>
+                                    <button class="dpi-btn" data-dpi="custom">Своё</button>
+                                </div>
+                                <div class="hidden" id="customDpiWrapper">
+                                    <input type="number" class="grid-input" id="customDpi" value="200" min="72" max="600" style="width: 100px;">
+                                    <span style="margin-left: 8px;">DPI</span>
+                                </div>
+                                
+                                <div class="resolution-info" id="resolutionInfo">
+                                    <div class="resolution-row">
+                                        <span class="resolution-label">Исходное:</span>
+                                        <span class="resolution-value" id="resOriginal">—</span>
+                                    </div>
+                                    <div class="resolution-row">
+                                        <span class="resolution-label">Итоговое:</span>
+                                        <span class="resolution-value" id="resTarget">—</span>
+                                    </div>
+                                    <div class="resolution-row">
+                                        <span class="resolution-label">Масштаб:</span>
+                                        <span class="resolution-value" id="resScale">—</span>
+                                    </div>
+                                </div>
+                                
+                                <div style="margin-top: 16px;">
+                                    <div class="settings-label" style="font-size: 1rem;">Пресет</div>
+                                    <div class="preset-buttons">
+                                        <button class="preset-btn active" data-preset="photo">📷 Фото</button>
+                                        <button class="preset-btn" data-preset="art">🎨 Рисунок</button>
+                                        <button class="preset-btn" data-preset="pixel">👾 Пиксельарт</button>
+                                        <button class="preset-btn" data-preset="custom">⚙️ Своё</button>
+                                    </div>
+                                </div>
+                                
+                                <div class="slider-group">
+                                    <div class="slider-header">
+                                        <span>Резкость</span>
+                                        <span class="slider-value" id="sharpenValue">30%</span>
+                                    </div>
+                                    <input type="range" id="sharpenSlider" min="0" max="100" value="30">
+                                </div>
+                                
+                                <div class="slider-group">
+                                    <div class="slider-header">
+                                        <span>Контраст</span>
+                                        <span class="slider-value" id="contrastValue">10%</span>
+                                    </div>
+                                    <input type="range" id="contrastSlider" min="-50" max="50" value="10">
+                                </div>
+                                
+                                <div class="slider-group">
+                                    <div class="slider-header">
+                                        <span>Яркость</span>
+                                        <span class="slider-value" id="brightnessValue">0%</span>
+                                    </div>
+                                    <input type="range" id="brightnessSlider" min="-50" max="50" value="0">
+                                </div>
+                                
+                                <div class="slider-group">
+                                    <div class="slider-header">
+                                        <span>Насыщенность</span>
+                                        <span class="slider-value" id="saturationValue">5%</span>
+                                    </div>
+                                    <input type="range" id="saturationSlider" min="-50" max="50" value="5">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Нахлёст -->
+                        <div class="settings-group">
+                            <div class="settings-label">📎 Нахлёст</div>
+                            <div class="toggle-group">
+                                <div class="toggle-item">
+                                    <span class="toggle-label">Для склейки внахлёст</span>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" id="enableOverlap">
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <div class="expandable-panel" id="overlapPanel">
+                                <div class="slider-group">
+                                    <div class="slider-header">
+                                        <span>Размер нахлёста</span>
+                                        <span class="slider-value" id="overlapValue">15 мм</span>
+                                    </div>
+                                    <input type="range" id="overlapSlider" min="5" max="30" value="15">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Экспорт -->
+                        <div class="settings-group">
+                            <div class="settings-label">💾 Формат</div>
+                            <div class="format-selector three-cols" id="exportFormatSelector">
+                                <button class="format-btn active" data-export="docx">📄 DOCX</button>
+                                <button class="format-btn" data-export="pdf">📕 PDF</button>
+                                <button class="format-btn" data-export="zip">📦 ZIP</button>
+                            </div>
+                        </div>
+                        
+                        <div class="actions">
+                            <button class="btn btn-primary" id="generateBtn" onclick="generateOutput()">
+                                🚀 Создать постер
+                            </button>
+                        </div>
+                        
+                        <div class="hint">
+                            <div class="hint-title">💡 Совет</div>
+                            Включите апскейл для повышения качества. Чем выше DPI, тем чётче печать, но дольше обработка.
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </main>
     
-    <!-- Модальное окно кроппера -->
+    <!-- Кроппер -->
     <div class="modal" id="cropperModal">
         <div class="modal-header">
             <div class="modal-title">✂️ Обрезка изображения</div>
@@ -902,689 +996,1294 @@
     <div class="progress-overlay" id="progressOverlay">
         <div class="progress-card">
             <div class="progress-spinner"></div>
-            <div class="progress-text" id="progressText">Создаём ваш постер...</div>
+            <div class="progress-text" id="progressText">Подготовка...</div>
+            <div class="progress-bar-container">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+            <div class="progress-details" id="progressDetails"></div>
         </div>
     </div>
-    
-    <footer class="footer">
-        Сделано с ❤️ для любителей больших постеров
-    </footer>
 
     <script>
-        // ============================================
-        // КОНФИГУРАЦИЯ
-        // ============================================
-        const CONFIG = {
-            paperSizes: {
-                'A4': { width: 210, height: 297 },
-                'A3': { width: 297, height: 420 },
-                'A5': { width: 148, height: 210 },
-                'Letter': { width: 215.9, height: 279.4 }
-            },
-            defaultDPI: 150,
-            maxDPI: 300,
-            mmToInch: 25.4,
-            mmToPoint: 2.83465 // для PDF
-        };
+    // ============================================
+    // КОНФИГУРАЦИЯ
+    // ============================================
+    const CONFIG = {
+        paperSizes: {
+            'A4': { width: 210, height: 297 },
+            'A3': { width: 297, height: 420 },
+            'A5': { width: 148, height: 210 },
+            'Letter': { width: 215.9, height: 279.4 }
+        },
+        previewMaxSize: 500,
+        mmToInch: 25.4,
+        mmToPoint: 2.83465,
+        chunkSize: 50000, // пикселей за итерацию для обработки
+        presets: {
+            photo: { sharpen: 30, contrast: 10, brightness: 0, saturation: 5 },
+            art: { sharpen: 50, contrast: 15, brightness: 0, saturation: 10 },
+            pixel: { sharpen: 0, contrast: 0, brightness: 0, saturation: 0 },
+            custom: { sharpen: 30, contrast: 10, brightness: 0, saturation: 5 }
+        }
+    };
+
+    // ============================================
+    // СОСТОЯНИЕ
+    // ============================================
+    const state = {
+        // Изображение
+        originalImage: null,
+        originalDataUrl: null,
+        imageWidth: 0,
+        imageHeight: 0,
         
-        // ============================================
-        // СОСТОЯНИЕ ПРИЛОЖЕНИЯ
-        // ============================================
-        let state = {
-            originalImage: null,
-            croppedImage: null,
-            imageWidth: 0,
-            imageHeight: 0,
-            paperFormat: 'A4',
-            orientation: 'portrait',
-            gridCols: 2,
-            gridRows: 2,
-            showNumbers: false,
-            enableOverlap: false,
-            overlapAmount: 15,
-            exportFormat: 'docx',
-            cropper: null
-        };
+        // Настройки
+        fitMode: 'fit',
+        paperFormat: 'A4',
+        orientation: 'portrait',
+        gridCols: 2,
+        gridRows: 2,
         
-        // ============================================
-        // ИНИЦИАЛИЗАЦИЯ
-        // ============================================
-        document.addEventListener('DOMContentLoaded', () => {
+        // Апскейл
+        enableUpscale: false,
+        targetDPI: 150,
+        customDPI: 200,
+        upscalePreset: 'photo',
+        sharpen: 30,
+        contrast: 10,
+        brightness: 0,
+        saturation: 5,
+        
+        // Нахлёст
+        enableOverlap: false,
+        overlapAmount: 15,
+        
+        // Экспорт
+        exportFormat: 'docx',
+        
+        // Внутреннее
+        cropper: null,
+        isProcessing: false,
+        abortController: null
+    };
+
+    // ============================================
+    // УТИЛИТЫ
+    // ============================================
+    
+    // Безопасная задержка для разгрузки main thread
+    const delay = (ms = 0) => new Promise(r => setTimeout(r, ms));
+    
+    // Разбиение тяжёлой работы на чанки
+    async function processInChunks(totalItems, chunkSize, callback, onProgress) {
+        let processed = 0;
+        while (processed < totalItems) {
+            const end = Math.min(processed + chunkSize, totalItems);
+            await callback(processed, end);
+            processed = end;
+            if (onProgress) onProgress(processed / totalItems);
+            await delay(0); // Отдаём контроль браузеру
+        }
+    }
+    
+    // Очистка ресурсов
+    function cleanupBlob(blob) {
+        if (blob && blob instanceof Blob) {
+            // Blob будет очищен GC автоматически
+        }
+    }
+    
+    function cleanupCanvas(canvas) {
+        if (canvas) {
+            const ctx = canvas.getContext('2d');
+            if (ctx) {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+            }
+            canvas.width = 1;
+            canvas.height = 1;
+        }
+    }
+
+    // Безопасное получение размера бумаги
+    function getPaperSize() {
+        const size = CONFIG.paperSizes[state.paperFormat] || CONFIG.paperSizes['A4'];
+        if (state.orientation === 'landscape') {
+            return { width: size.height, height: size.width };
+        }
+        return { width: size.width, height: size.height };
+    }
+    
+    // Склонение слов
+    function getSheetWord(n) {
+        const abs = Math.abs(n) % 100;
+        const lastDigit = abs % 10;
+        if (abs >= 11 && abs <= 14) return 'листов';
+        if (lastDigit === 1) return 'лист';
+        if (lastDigit >= 2 && lastDigit <= 4) return 'листа';
+        return 'листов';
+    }
+
+    // ============================================
+    // ИНИЦИАЛИЗАЦИЯ
+    // ============================================
+    document.addEventListener('DOMContentLoaded', () => {
+        try {
             initUpload();
             initSettings();
+        } catch (e) {
+            console.error('Init error:', e);
+        }
+    });
+
+    function initUpload() {
+        const uploadZone = document.getElementById('uploadZone');
+        const fileInput = document.getElementById('fileInput');
+        
+        uploadZone.addEventListener('click', () => fileInput.click());
+        
+        fileInput.addEventListener('change', (e) => {
+            const file = e.target.files?.[0];
+            if (file) loadImage(file);
         });
         
-        function initUpload() {
-            const uploadZone = document.getElementById('uploadZone');
-            const fileInput = document.getElementById('fileInput');
+        uploadZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            uploadZone.classList.add('dragover');
+        });
+        
+        uploadZone.addEventListener('dragleave', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            uploadZone.classList.remove('dragover');
+        });
+        
+        uploadZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            uploadZone.classList.remove('dragover');
+            const file = e.dataTransfer?.files?.[0];
+            if (file && file.type.startsWith('image/')) {
+                loadImage(file);
+            } else {
+                showError('Пожалуйста, выберите изображение (JPG, PNG, WebP)');
+            }
+        });
+    }
+
+    function initSettings() {
+        // Режим размещения
+        setupButtonGroup('#fitModeSelector [data-fitmode]', (btn) => {
+            state.fitMode = btn.dataset.fitmode;
+            schedulePreviewUpdate();
+        });
+        
+        // Формат бумаги
+        setupButtonGroup('#paperFormatSelector [data-format]', (btn) => {
+            state.paperFormat = btn.dataset.format;
+            schedulePreviewUpdate();
+        });
+        
+        // Ориентация
+        setupButtonGroup('#orientationSelector [data-orientation]', (btn) => {
+            state.orientation = btn.dataset.orientation;
+            schedulePreviewUpdate();
+        });
+        
+        // Сетка
+        document.getElementById('gridCols').addEventListener('input', (e) => {
+            state.gridCols = Math.max(1, Math.min(20, parseInt(e.target.value) || 1));
+            schedulePreviewUpdate();
+        });
+        
+        document.getElementById('gridRows').addEventListener('input', (e) => {
+            state.gridRows = Math.max(1, Math.min(20, parseInt(e.target.value) || 1));
+            schedulePreviewUpdate();
+        });
+        
+        // Апскейл
+        document.getElementById('enableUpscale').addEventListener('change', (e) => {
+            state.enableUpscale = e.target.checked;
+            document.getElementById('upscalePanel').classList.toggle('visible', e.target.checked);
+            updateResolutionInfo();
+        });
+        
+        // DPI
+        setupButtonGroup('.dpi-btn[data-dpi]', (btn) => {
+            const dpi = btn.dataset.dpi;
+            const customWrapper = document.getElementById('customDpiWrapper');
             
-            // Клик по зоне
-            uploadZone.addEventListener('click', () => fileInput.click());
+            if (dpi === 'custom') {
+                customWrapper.classList.remove('hidden');
+                state.targetDPI = parseInt(document.getElementById('customDpi').value) || 200;
+            } else {
+                customWrapper.classList.add('hidden');
+                state.targetDPI = parseInt(dpi);
+            }
+            updateResolutionInfo();
+        });
+        
+        document.getElementById('customDpi').addEventListener('input', (e) => {
+            state.targetDPI = Math.max(72, Math.min(600, parseInt(e.target.value) || 150));
+            state.customDPI = state.targetDPI;
+            updateResolutionInfo();
+        });
+        
+        // Пресеты
+        setupButtonGroup('.preset-btn[data-preset]', (btn) => {
+            state.upscalePreset = btn.dataset.preset;
+            if (btn.dataset.preset !== 'custom') {
+                applyPreset(btn.dataset.preset);
+            }
+        });
+        
+        // Слайдеры обработки
+        ['sharpen', 'contrast', 'brightness', 'saturation'].forEach(param => {
+            const slider = document.getElementById(param + 'Slider');
+            const valueEl = document.getElementById(param + 'Value');
             
-            // Выбор файла
-            fileInput.addEventListener('change', (e) => {
-                if (e.target.files[0]) {
-                    loadImage(e.target.files[0]);
-                }
-            });
-            
-            // Drag & Drop
-            uploadZone.addEventListener('dragover', (e) => {
-                e.preventDefault();
-                uploadZone.classList.add('dragover');
-            });
-            
-            uploadZone.addEventListener('dragleave', () => {
-                uploadZone.classList.remove('dragover');
-            });
-            
-            uploadZone.addEventListener('drop', (e) => {
-                e.preventDefault();
-                uploadZone.classList.remove('dragover');
+            slider?.addEventListener('input', (e) => {
+                state[param] = parseInt(e.target.value);
+                valueEl.textContent = e.target.value + '%';
                 
-                const file = e.dataTransfer.files[0];
-                if (file && file.type.startsWith('image/')) {
-                    loadImage(file);
-                }
+                // Переключаемся на "Своё"
+                document.querySelectorAll('.preset-btn[data-preset]').forEach(b => b.classList.remove('active'));
+                document.querySelector('.preset-btn[data-preset="custom"]')?.classList.add('active');
+                state.upscalePreset = 'custom';
             });
+        });
+        
+        // Нахлёст
+        document.getElementById('enableOverlap').addEventListener('change', (e) => {
+            state.enableOverlap = e.target.checked;
+            document.getElementById('overlapPanel').classList.toggle('visible', e.target.checked);
+            document.getElementById('legendOverlap').classList.toggle('hidden', !e.target.checked);
+            schedulePreviewUpdate();
+        });
+        
+        document.getElementById('overlapSlider').addEventListener('input', (e) => {
+            state.overlapAmount = parseInt(e.target.value);
+            document.getElementById('overlapValue').textContent = e.target.value + ' мм';
+            schedulePreviewUpdate();
+        });
+        
+        // Формат экспорта
+        setupButtonGroup('#exportFormatSelector [data-export]', (btn) => {
+            state.exportFormat = btn.dataset.export;
+        });
+    }
+    
+    function setupButtonGroup(selector, callback) {
+        document.querySelectorAll(selector).forEach(btn => {
+            btn.addEventListener('click', () => {
+                btn.parentElement.querySelectorAll('.format-btn, .preset-btn, .dpi-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                callback(btn);
+            });
+        });
+    }
+    
+    function applyPreset(presetName) {
+        const preset = CONFIG.presets[presetName];
+        if (!preset) return;
+        
+        Object.entries(preset).forEach(([key, value]) => {
+            state[key] = value;
+            const slider = document.getElementById(key + 'Slider');
+            const valueEl = document.getElementById(key + 'Value');
+            if (slider) slider.value = value;
+            if (valueEl) valueEl.textContent = value + '%';
+        });
+    }
+
+    // ============================================
+    // ЗАГРУЗКА ИЗОБРАЖЕНИЯ
+    // ============================================
+    function loadImage(file) {
+        hideError();
+        
+        // Проверка размера
+        if (file.size > 50 * 1024 * 1024) {
+            showError('Файл слишком большой. Максимум 50 МБ.');
+            return;
         }
         
-        function initSettings() {
-            // Формат бумаги
-            document.querySelectorAll('#paperFormat .format-btn').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    document.querySelectorAll('#paperFormat .format-btn').forEach(b => b.classList.remove('active'));
-                    btn.classList.add('active');
-                    state.paperFormat = btn.dataset.format;
-                    updatePreview();
-                });
-            });
-            
-            // Ориентация
-            document.querySelectorAll('#orientation .format-btn').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    document.querySelectorAll('#orientation .format-btn').forEach(b => b.classList.remove('active'));
-                    btn.classList.add('active');
-                    state.orientation = btn.dataset.orientation;
-                    updatePreview();
-                });
-            });
-            
-            // Сетка
-            document.getElementById('gridCols').addEventListener('input', (e) => {
-                state.gridCols = Math.max(1, Math.min(20, parseInt(e.target.value) || 1));
-                updatePreview();
-            });
-            
-            document.getElementById('gridRows').addEventListener('input', (e) => {
-                state.gridRows = Math.max(1, Math.min(20, parseInt(e.target.value) || 1));
-                updatePreview();
-            });
-            
-            // Нумерация
-            document.getElementById('showNumbers').addEventListener('change', (e) => {
-                state.showNumbers = e.target.checked;
-                updatePreview();
-            });
-            
-            // Нахлёст
-            document.getElementById('enableOverlap').addEventListener('change', (e) => {
-                state.enableOverlap = e.target.checked;
-                document.getElementById('overlapSlider').classList.toggle('visible', e.target.checked);
-            });
-            
-            document.getElementById('overlapAmount').addEventListener('input', (e) => {
-                state.overlapAmount = parseInt(e.target.value);
-                document.getElementById('overlapValue').textContent = state.overlapAmount;
-            });
-            
-            // Формат экспорта
-            document.querySelectorAll('#exportFormat .format-btn').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    document.querySelectorAll('#exportFormat .format-btn').forEach(b => b.classList.remove('active'));
-                    btn.classList.add('active');
-                    state.exportFormat = btn.dataset.export;
-                });
-            });
+        // Проверка типа
+        if (!file.type.startsWith('image/')) {
+            showError('Пожалуйста, выберите изображение.');
+            return;
         }
         
-        // ============================================
-        // ЗАГРУЗКА ИЗОБРАЖЕНИЯ
-        // ============================================
-        function loadImage(file) {
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                const img = new Image();
-                img.onload = () => {
+        const reader = new FileReader();
+        
+        reader.onerror = () => {
+            showError('Не удалось прочитать файл.');
+        };
+        
+        reader.onload = (e) => {
+            const img = new Image();
+            
+            img.onerror = () => {
+                showError('Не удалось загрузить изображение. Возможно, файл повреждён.');
+            };
+            
+            img.onload = () => {
+                try {
+                    // Проверка на слишком большое изображение
+                    if (img.naturalWidth * img.naturalHeight > 100000000) {
+                        showError('Изображение слишком большое (более 100 мегапикселей).');
+                        return;
+                    }
+                    
                     state.originalImage = img;
-                    state.croppedImage = null;
+                    state.originalDataUrl = e.target.result;
                     state.imageWidth = img.naturalWidth;
                     state.imageHeight = img.naturalHeight;
                     
-                    // Показываем редактор
                     document.getElementById('uploadCard').classList.add('hidden');
                     document.getElementById('editorSection').classList.remove('hidden');
                     
-                    // Обновляем шаги
                     document.getElementById('step1').classList.remove('active');
                     document.getElementById('step1').classList.add('completed');
                     document.getElementById('step2').classList.add('active');
                     
-                    // Авто-подбор сетки
                     autoGrid();
+                    updateResolutionInfo();
                     
-                    // Устанавливаем превью
-                    document.getElementById('previewImage').src = e.target.result;
-                    document.getElementById('cropperImage').src = e.target.result;
-                    
-                    setTimeout(updatePreview, 100);
-                };
-                img.src = e.target.result;
+                } catch (err) {
+                    console.error('Error loading image:', err);
+                    showError('Произошла ошибка при загрузке изображения.');
+                }
             };
-            reader.readAsDataURL(file);
+            
+            img.src = e.target.result;
+        };
+        
+        reader.readAsDataURL(file);
+    }
+    
+    function resetImage() {
+        // Очищаем ресурсы
+        if (state.cropper) {
+            state.cropper.destroy();
+            state.cropper = null;
         }
         
-        function resetImage() {
-            state.originalImage = null;
-            state.croppedImage = null;
-            
-            document.getElementById('uploadCard').classList.remove('hidden');
-            document.getElementById('editorSection').classList.add('hidden');
-            document.getElementById('fileInput').value = '';
-            
-            // Сбрасываем шаги
-            document.getElementById('step1').classList.add('active');
-            document.getElementById('step1').classList.remove('completed');
-            document.getElementById('step2').classList.remove('active');
-            document.getElementById('step3').classList.remove('active');
-        }
+        state.originalImage = null;
+        state.originalDataUrl = null;
         
-        // ============================================
-        // АВТО-ПОДБОР СЕТКИ
-        // ============================================
-        function autoGrid() {
-            const paper = getPaperSize();
-            const imgRatio = state.imageWidth / state.imageHeight;
-            const paperRatio = paper.width / paper.height;
-            
-            // Ищем оптимальную сетку (макс 20 листов)
-            let bestCols = 2, bestRows = 2;
-            let bestDiff = Infinity;
-            
-            for (let cols = 1; cols <= 6; cols++) {
-                for (let rows = 1; rows <= 6; rows++) {
-                    const gridRatio = (cols * paper.width) / (rows * paper.height);
-                    const diff = Math.abs(gridRatio - imgRatio);
-                    
-                    if (diff < bestDiff) {
-                        bestDiff = diff;
-                        bestCols = cols;
-                        bestRows = rows;
-                    }
+        document.getElementById('uploadCard').classList.remove('hidden');
+        document.getElementById('editorSection').classList.add('hidden');
+        document.getElementById('fileInput').value = '';
+        
+        document.getElementById('step1').classList.add('active');
+        document.getElementById('step1').classList.remove('completed');
+        document.getElementById('step2').classList.remove('active');
+        document.getElementById('step3').classList.remove('active', 'completed');
+        
+        hideError();
+    }
+    
+    function showError(message) {
+        const errorEl = document.getElementById('uploadError');
+        errorEl.textContent = message;
+        errorEl.classList.remove('hidden');
+    }
+    
+    function hideError() {
+        document.getElementById('uploadError').classList.add('hidden');
+    }
+
+    // ============================================
+    // АВТО-ПОДБОР СЕТКИ
+    // ============================================
+    function autoGrid() {
+        if (!state.originalImage) return;
+        
+        const paper = getPaperSize();
+        const imgRatio = state.imageWidth / state.imageHeight;
+        const paperRatio = paper.width / paper.height;
+        
+        let bestCols = 2, bestRows = 2;
+        let bestDiff = Infinity;
+        
+        // Ищем оптимальную сетку
+        for (let cols = 1; cols <= 6; cols++) {
+            for (let rows = 1; rows <= 6; rows++) {
+                const gridRatio = (cols * paper.width) / (rows * paper.height);
+                const diff = Math.abs(gridRatio - imgRatio);
+                
+                if (diff < bestDiff) {
+                    bestDiff = diff;
+                    bestCols = cols;
+                    bestRows = rows;
                 }
             }
-            
-            state.gridCols = bestCols;
-            state.gridRows = bestRows;
-            document.getElementById('gridCols').value = bestCols;
-            document.getElementById('gridRows').value = bestRows;
-            
+        }
+        
+        state.gridCols = bestCols;
+        state.gridRows = bestRows;
+        document.getElementById('gridCols').value = bestCols;
+        document.getElementById('gridRows').value = bestRows;
+        
+        updatePreview();
+    }
+
+    // ============================================
+    // ИНФОРМАЦИЯ О РАЗРЕШЕНИИ
+    // ============================================
+    function updateResolutionInfo() {
+        if (!state.originalImage) return;
+        
+        const paper = getPaperSize();
+        const gridWidthMM = paper.width * state.gridCols;
+        const gridHeightMM = paper.height * state.gridRows;
+        
+        // Исходное разрешение
+        document.getElementById('resOriginal').textContent = 
+            `${state.imageWidth} × ${state.imageHeight} px`;
+        
+        // Целевое разрешение при выбранном DPI
+        const targetWidth = Math.round((gridWidthMM / CONFIG.mmToInch) * state.targetDPI);
+        const targetHeight = Math.round((gridHeightMM / CONFIG.mmToInch) * state.targetDPI);
+        
+        document.getElementById('resTarget').textContent = 
+            `${targetWidth} × ${targetHeight} px`;
+        
+        // Масштаб
+        const scaleX = targetWidth / state.imageWidth;
+        const scaleY = targetHeight / state.imageHeight;
+        const scale = Math.max(scaleX, scaleY);
+        
+        const scaleEl = document.getElementById('resScale');
+        if (scale > 1) {
+            scaleEl.textContent = `×${scale.toFixed(1)} (увеличение)`;
+            scaleEl.style.color = scale > 3 ? 'var(--danger)' : scale > 2 ? 'var(--warning)' : 'var(--success)';
+        } else {
+            scaleEl.textContent = `×${scale.toFixed(2)} (уменьшение)`;
+            scaleEl.style.color = 'var(--success)';
+        }
+    }
+
+    // ============================================
+    // ПРЕВЬЮ
+    // ============================================
+    let previewTimeout = null;
+    
+    function schedulePreviewUpdate() {
+        if (previewTimeout) clearTimeout(previewTimeout);
+        previewTimeout = setTimeout(() => {
             updatePreview();
-        }
+            updateResolutionInfo();
+        }, 50);
+    }
+    
+    function updatePreview() {
+        if (!state.originalImage) return;
         
-        function getPaperSize() {
-            const size = CONFIG.paperSizes[state.paperFormat];
-            if (state.orientation === 'landscape') {
-                return { width: size.height, height: size.width };
+        try {
+            const canvas = document.getElementById('previewCanvas');
+            const ctx = canvas.getContext('2d');
+            const paper = getPaperSize();
+            
+            // Размеры сетки в мм
+            const gridWidthMM = paper.width * state.gridCols;
+            const gridHeightMM = paper.height * state.gridRows;
+            const gridRatio = gridWidthMM / gridHeightMM;
+            
+            // Размеры изображения
+            const imgRatio = state.imageWidth / state.imageHeight;
+            
+            // Размеры превью (canvas)
+            let canvasWidth, canvasHeight;
+            if (gridRatio > 1) {
+                canvasWidth = CONFIG.previewMaxSize;
+                canvasHeight = canvasWidth / gridRatio;
+            } else {
+                canvasHeight = CONFIG.previewMaxSize;
+                canvasWidth = canvasHeight * gridRatio;
             }
-            return { width: size.width, height: size.height };
+            
+            canvasWidth = Math.round(canvasWidth);
+            canvasHeight = Math.round(canvasHeight);
+            
+            canvas.width = canvasWidth;
+            canvas.height = canvasHeight;
+            
+            // Белый фон
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, canvasWidth, canvasHeight);
+            
+            // Вычисляем как разместить картинку
+            let imgDrawWidth, imgDrawHeight, imgDrawX, imgDrawY;
+            
+            if (state.fitMode === 'fit') {
+                // Вписать целиком
+                if (imgRatio > gridRatio) {
+                    imgDrawWidth = canvasWidth;
+                    imgDrawHeight = canvasWidth / imgRatio;
+                } else {
+                    imgDrawHeight = canvasHeight;
+                    imgDrawWidth = canvasHeight * imgRatio;
+                }
+                imgDrawX = (canvasWidth - imgDrawWidth) / 2;
+                imgDrawY = (canvasHeight - imgDrawHeight) / 2;
+            } else {
+                // Заполнить
+                if (imgRatio > gridRatio) {
+                    imgDrawHeight = canvasHeight;
+                    imgDrawWidth = canvasHeight * imgRatio;
+                } else {
+                    imgDrawWidth = canvasWidth;
+                    imgDrawHeight = canvasWidth / imgRatio;
+                }
+                imgDrawX = (canvasWidth - imgDrawWidth) / 2;
+                imgDrawY = (canvasHeight - imgDrawHeight) / 2;
+            }
+            
+            // Рисуем изображение
+            ctx.imageSmoothingEnabled = true;
+            ctx.imageSmoothingQuality = 'high';
+            ctx.drawImage(state.originalImage, imgDrawX, imgDrawY, imgDrawWidth, imgDrawHeight);
+            
+            // Рисуем сетку
+            drawGrid(canvasWidth, canvasHeight, imgDrawX, imgDrawY, imgDrawWidth, imgDrawHeight);
+            
+            // Обновляем размеры
+            document.getElementById('dimWidth').textContent = `${(gridWidthMM / 10).toFixed(0)} см`;
+            document.getElementById('dimHeight').textContent = `${(gridHeightMM / 10).toFixed(0)} см`;
+            
+            // Статистика
+            updateStats();
+            
+        } catch (err) {
+            console.error('Preview error:', err);
         }
+    }
+    
+    function drawGrid(canvasWidth, canvasHeight, imgX, imgY, imgWidth, imgHeight) {
+        const svg = document.getElementById('gridLines');
+        svg.setAttribute('width', canvasWidth);
+        svg.setAttribute('height', canvasHeight);
+        svg.innerHTML = '';
         
-        // ============================================
-        // ОБНОВЛЕНИЕ ПРЕВЬЮ
-        // ============================================
-        function updatePreview() {
-            const gridOverlay = document.getElementById('gridOverlay');
-            const previewImage = document.getElementById('previewImage');
-            
-            if (!previewImage.complete || !previewImage.naturalWidth) {
-                setTimeout(updatePreview, 100);
-                return;
-            }
-            
-            // Получаем реальные размеры отображаемой картинки
-            const rect = previewImage.getBoundingClientRect();
-            const displayWidth = previewImage.offsetWidth;
-            const displayHeight = previewImage.offsetHeight;
-            
-            // Очищаем сетку
-            gridOverlay.innerHTML = '';
-            gridOverlay.style.width = displayWidth + 'px';
-            gridOverlay.style.height = displayHeight + 'px';
-            
-            const cellWidth = displayWidth / state.gridCols;
-            const cellHeight = displayHeight / state.gridRows;
-            
-            // Создаём ячейки сетки
-            for (let row = 0; row < state.gridRows; row++) {
-                for (let col = 0; col < state.gridCols; col++) {
-                    const cell = document.createElement('div');
-                    cell.className = 'grid-cell';
-                    cell.style.left = (col * cellWidth) + 'px';
-                    cell.style.top = (row * cellHeight) + 'px';
-                    cell.style.width = cellWidth + 'px';
-                    cell.style.height = cellHeight + 'px';
+        const cellWidth = canvasWidth / state.gridCols;
+        const cellHeight = canvasHeight / state.gridRows;
+        
+        // Размер нахлёста в пикселях
+        const overlapPx = state.enableOverlap 
+            ? (state.overlapAmount / getPaperSize().width) * cellWidth
+            : 0;
+        
+        let hasPartial = false;
+        
+        for (let row = 0; row < state.gridRows; row++) {
+            for (let col = 0; col < state.gridCols; col++) {
+                const x = col * cellWidth;
+                const y = row * cellHeight;
+                
+                // Проверяем частичность в режиме fit
+                let isPartial = false;
+                if (state.fitMode === 'fit') {
+                    const cellRight = x + cellWidth;
+                    const cellBottom = y + cellHeight;
                     
-                    if (state.showNumbers) {
-                        const label = document.createElement('span');
-                        label.className = 'grid-cell-label';
-                        label.textContent = `${String.fromCharCode(65 + row)}${col + 1}`;
-                        cell.appendChild(label);
+                    // Ячейка частичная если не полностью внутри картинки
+                    if (x < imgX || cellRight > imgX + imgWidth ||
+                        y < imgY || cellBottom > imgY + imgHeight) {
+                        
+                        // Проверяем пересечение
+                        const intersects = !(cellRight <= imgX || x >= imgX + imgWidth ||
+                                             cellBottom <= imgY || y >= imgY + imgHeight);
+                        
+                        if (intersects || 
+                            (x >= imgX && cellRight <= imgX + imgWidth && y >= imgY && cellBottom <= imgY + imgHeight)) {
+                            isPartial = true;
+                            hasPartial = true;
+                        }
+                    }
+                }
+                
+                // Ячейка
+                const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+                rect.setAttribute('x', x);
+                rect.setAttribute('y', y);
+                rect.setAttribute('width', cellWidth);
+                rect.setAttribute('height', cellHeight);
+                rect.setAttribute('fill', isPartial ? 'rgba(255, 193, 7, 0.2)' : 'rgba(74, 144, 217, 0.15)');
+                rect.setAttribute('stroke', isPartial ? 'rgba(255, 193, 7, 0.9)' : 'rgba(74, 144, 217, 0.9)');
+                rect.setAttribute('stroke-width', '2');
+                svg.appendChild(rect);
+                
+                // Нахлёст
+                if (state.enableOverlap && overlapPx > 0) {
+                    // Справа
+                    if (col < state.gridCols - 1) {
+                        const overlapRect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+                        overlapRect.setAttribute('x', x + cellWidth - overlapPx);
+                        overlapRect.setAttribute('y', y);
+                        overlapRect.setAttribute('width', overlapPx * 2);
+                        overlapRect.setAttribute('height', cellHeight);
+                        overlapRect.setAttribute('fill', 'rgba(46, 204, 113, 0.3)');
+                        overlapRect.setAttribute('stroke', 'rgba(46, 204, 113, 0.8)');
+                        overlapRect.setAttribute('stroke-width', '1');
+                        overlapRect.setAttribute('stroke-dasharray', '4,2');
+                        svg.appendChild(overlapRect);
                     }
                     
-                    gridOverlay.appendChild(cell);
+                    // Снизу
+                    if (row < state.gridRows - 1) {
+                        const overlapRect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+                        overlapRect.setAttribute('x', x);
+                        overlapRect.setAttribute('y', y + cellHeight - overlapPx);
+                        overlapRect.setAttribute('width', cellWidth);
+                        overlapRect.setAttribute('height', overlapPx * 2);
+                        overlapRect.setAttribute('fill', 'rgba(46, 204, 113, 0.3)');
+                        overlapRect.setAttribute('stroke', 'rgba(46, 204, 113, 0.8)');
+                        overlapRect.setAttribute('stroke-width', '1');
+                        overlapRect.setAttribute('stroke-dasharray', '4,2');
+                        svg.appendChild(overlapRect);
+                    }
                 }
             }
-            
-            // Обновляем информацию
-            updateSizeInfo();
         }
         
-        function updateSizeInfo() {
-            const paper = getPaperSize();
-            const totalWidth = (paper.width * state.gridCols) / 10; // в см
-            const totalHeight = (paper.height * state.gridRows) / 10; // в см
-            const totalSheets = state.gridCols * state.gridRows;
-            
-            document.getElementById('posterSize').textContent = 
-                `${totalWidth.toFixed(0)} × ${totalHeight.toFixed(0)} см`;
-            document.getElementById('sheetsCount').textContent = 
-                `${totalSheets} ${getSheetWord(totalSheets)}`;
-            
-            // Расчёт DPI (качества)
-            const totalWidthMM = paper.width * state.gridCols;
-            const totalHeightMM = paper.height * state.gridRows;
-            const totalWidthInch = totalWidthMM / CONFIG.mmToInch;
-            const totalHeightInch = totalHeightMM / CONFIG.mmToInch;
-            
-            const dpiX = state.imageWidth / totalWidthInch;
-            const dpiY = state.imageHeight / totalHeightInch;
-            const dpi = Math.min(dpiX, dpiY);
-            
-            const qualityEl = document.getElementById('printQuality');
-            if (dpi >= 200) {
-                qualityEl.textContent = `Отлично (${Math.round(dpi)} DPI)`;
-                qualityEl.className = 'size-info-value quality-good';
-            } else if (dpi >= 100) {
-                qualityEl.textContent = `Нормально (${Math.round(dpi)} DPI)`;
-                qualityEl.className = 'size-info-value quality-medium';
-            } else {
-                qualityEl.textContent = `Низкое (${Math.round(dpi)} DPI)`;
-                qualityEl.className = 'size-info-value quality-bad';
+        // Показываем/скрываем легенду частичных
+        document.getElementById('legendPartial').classList.toggle('hidden', !hasPartial);
+    }
+    
+    function updateStats() {
+        const paper = getPaperSize();
+        const totalWidthCM = (paper.width * state.gridCols) / 10;
+        const totalHeightCM = (paper.height * state.gridRows) / 10;
+        const totalSheets = state.gridCols * state.gridRows;
+        
+        document.getElementById('statPosterSize').textContent = 
+            `${totalWidthCM.toFixed(0)}×${totalHeightCM.toFixed(0)} см`;
+        document.getElementById('statSheets').textContent = 
+            `${totalSheets} ${getSheetWord(totalSheets)}`;
+        
+        // Качество (DPI)
+        const gridWidthMM = paper.width * state.gridCols;
+        const gridHeightMM = paper.height * state.gridRows;
+        const gridWidthInch = gridWidthMM / CONFIG.mmToInch;
+        const gridHeightInch = gridHeightMM / CONFIG.mmToInch;
+        
+        const dpiX = state.imageWidth / gridWidthInch;
+        const dpiY = state.imageHeight / gridHeightInch;
+        const dpi = Math.min(dpiX, dpiY);
+        
+        const qualityEl = document.getElementById('statQuality');
+        if (dpi >= 150) {
+            qualityEl.textContent = `${Math.round(dpi)} DPI`;
+            qualityEl.className = 'preview-stat-value quality-good';
+        } else if (dpi >= 72) {
+            qualityEl.textContent = `${Math.round(dpi)} DPI`;
+            qualityEl.className = 'preview-stat-value quality-medium';
+        } else {
+            qualityEl.textContent = `${Math.round(dpi)} DPI`;
+            qualityEl.className = 'preview-stat-value quality-bad';
+        }
+    }
+
+    // ============================================
+    // КРОППЕР
+    // ============================================
+    function openCropper() {
+        if (!state.originalDataUrl) return;
+        
+        const modal = document.getElementById('cropperModal');
+        const cropperImage = document.getElementById('cropperImage');
+        
+        modal.classList.add('active');
+        cropperImage.src = state.originalDataUrl;
+        
+        // Уничтожаем старый
+        if (state.cropper) {
+            state.cropper.destroy();
+            state.cropper = null;
+        }
+        
+        // Ждём загрузки изображения
+        cropperImage.onload = () => {
+            try {
+                state.cropper = new Cropper(cropperImage, {
+                    viewMode: 1,
+                    dragMode: 'move',
+                    autoCropArea: 1,
+                    restore: false,
+                    guides: true,
+                    center: true,
+                    highlight: false,
+                    cropBoxMovable: true,
+                    cropBoxResizable: true,
+                    toggleDragModeOnDblclick: false,
+                    ready: function() {
+                        // Кроппер готов
+                    }
+                });
+            } catch (err) {
+                console.error('Cropper init error:', err);
+                closeCropper();
             }
-        }
+        };
+    }
+    
+    function closeCropper() {
+        const modal = document.getElementById('cropperModal');
+        modal.classList.remove('active');
         
-        function getSheetWord(n) {
-            const lastTwo = n % 100;
-            const lastOne = n % 10;
-            
-            if (lastTwo >= 11 && lastTwo <= 14) return 'листов';
-            if (lastOne === 1) return 'лист';
-            if (lastOne >= 2 && lastOne <= 4) return 'листа';
-            return 'листов';
-        }
-        
-        // ============================================
-        // КРОППЕР
-        // ============================================
-        function openCropper() {
-            const modal = document.getElementById('cropperModal');
-            modal.classList.add('active');
-            
-            const cropperImage = document.getElementById('cropperImage');
-            
-            // Уничтожаем старый кроппер если есть
-            if (state.cropper) {
+        if (state.cropper) {
+            try {
                 state.cropper.destroy();
-            }
-            
-            // Рассчитываем соотношение сторон на основе сетки
-            const paper = getPaperSize();
-            const aspectRatio = (state.gridCols * paper.width) / (state.gridRows * paper.height);
-            
-            state.cropper = new Cropper(cropperImage, {
-                aspectRatio: aspectRatio,
-                viewMode: 1,
-                dragMode: 'move',
-                autoCropArea: 1,
-                restore: false,
-                guides: true,
-                center: true,
-                highlight: false,
-                cropBoxMovable: true,
-                cropBoxResizable: true,
-                toggleDragModeOnDblclick: false
-            });
+            } catch (e) {}
+            state.cropper = null;
+        }
+    }
+    
+    function applyCrop() {
+        if (!state.cropper) {
+            closeCropper();
+            return;
         }
         
-        function closeCropper() {
-            document.getElementById('cropperModal').classList.remove('active');
-            if (state.cropper) {
-                state.cropper.destroy();
-                state.cropper = null;
-            }
-        }
-        
-        function applyCrop() {
-            if (!state.cropper) return;
-            
-            const canvas = state.cropper.getCroppedCanvas({
+        try {
+            const croppedCanvas = state.cropper.getCroppedCanvas({
                 maxWidth: 8000,
                 maxHeight: 8000,
                 imageSmoothingEnabled: true,
                 imageSmoothingQuality: 'high'
             });
             
-            const dataUrl = canvas.toDataURL('image/jpeg', 0.95);
+            if (!croppedCanvas) {
+                console.error('Failed to get cropped canvas');
+                closeCropper();
+                return;
+            }
             
-            // Обновляем изображение
-            document.getElementById('previewImage').src = dataUrl;
+            const dataUrl = croppedCanvas.toDataURL('image/jpeg', 0.95);
             
             const img = new Image();
             img.onload = () => {
-                state.croppedImage = img;
+                state.originalImage = img;
+                state.originalDataUrl = dataUrl;
                 state.imageWidth = img.naturalWidth;
                 state.imageHeight = img.naturalHeight;
+                
+                // Обновляем картинку в кроппере для следующего раза
+                document.getElementById('cropperImage').src = dataUrl;
+                
                 closeCropper();
                 updatePreview();
+                updateResolutionInfo();
             };
+            
+            img.onerror = () => {
+                console.error('Failed to load cropped image');
+                closeCropper();
+            };
+            
             img.src = dataUrl;
-        }
-        
-        // ============================================
-        // ГЕНЕРАЦИЯ ФАЙЛОВ
-        // ============================================
-        async function generateOutput() {
-            showProgress('Подготовка изображений...');
             
-            try {
-                const fragments = await generateFragments();
+            // Очищаем canvas
+            cleanupCanvas(croppedCanvas);
+            
+        } catch (err) {
+            console.error('Crop error:', err);
+            closeCropper();
+        }
+    }
+
+    // ============================================
+    // ОБРАБОТКА ИЗОБРАЖЕНИЯ (без зависаний)
+    // ============================================
+    async function processImageData(imageData, width, height, onProgress) {
+        const data = imageData.data;
+        const totalPixels = width * height;
+        const chunkSize = CONFIG.chunkSize;
+        
+        // Яркость и контраст
+        const contrast = state.contrast;
+        const brightness = state.brightness;
+        const saturation = state.saturation;
+        
+        const contrastFactor = (259 * (contrast + 255)) / (255 * (259 - contrast));
+        const brightnessOffset = brightness * 2.55;
+        const satFactor = 1 + saturation / 100;
+        
+        await processInChunks(totalPixels, chunkSize, async (start, end) => {
+            for (let i = start; i < end; i++) {
+                const idx = i * 4;
                 
-                switch (state.exportFormat) {
-                    case 'docx':
-                        await generateDOCX(fragments);
-                        break;
-                    case 'pdf':
-                        await generatePDF(fragments);
-                        break;
-                    case 'zip':
-                        await generateZIP(fragments);
-                        break;
+                let r = data[idx];
+                let g = data[idx + 1];
+                let b = data[idx + 2];
+                
+                // Яркость
+                r += brightnessOffset;
+                g += brightnessOffset;
+                b += brightnessOffset;
+                
+                // Контраст
+                r = contrastFactor * (r - 128) + 128;
+                g = contrastFactor * (g - 128) + 128;
+                b = contrastFactor * (b - 128) + 128;
+                
+                // Насыщенность
+                const gray = 0.2989 * r + 0.587 * g + 0.114 * b;
+                r = gray + satFactor * (r - gray);
+                g = gray + satFactor * (g - gray);
+                b = gray + satFactor * (b - gray);
+                
+                // Clamp
+                data[idx] = Math.max(0, Math.min(255, r));
+                data[idx + 1] = Math.max(0, Math.min(255, g));
+                data[idx + 2] = Math.max(0, Math.min(255, b));
+            }
+        }, onProgress);
+        
+        return imageData;
+    }
+    
+    async function applySharpening(ctx, width, height, amount, onProgress) {
+        if (amount <= 0) return;
+        
+        const strength = amount / 100;
+        const original = ctx.getImageData(0, 0, width, height);
+        const origData = original.data;
+        
+        // Создаём размытую версию
+        const blurred = ctx.getImageData(0, 0, width, height);
+        const blurData = blurred.data;
+        
+        const totalPixels = width * height;
+        const chunkSize = CONFIG.chunkSize;
+        
+        // Box blur
+        await processInChunks(totalPixels, chunkSize, async (start, end) => {
+            for (let i = start; i < end; i++) {
+                const x = i % width;
+                const y = Math.floor(i / width);
+                
+                let r = 0, g = 0, b = 0, count = 0;
+                
+                for (let dy = -1; dy <= 1; dy++) {
+                    for (let dx = -1; dx <= 1; dx++) {
+                        const nx = Math.min(width - 1, Math.max(0, x + dx));
+                        const ny = Math.min(height - 1, Math.max(0, y + dy));
+                        const idx = (ny * width + nx) * 4;
+                        
+                        r += origData[idx];
+                        g += origData[idx + 1];
+                        b += origData[idx + 2];
+                        count++;
+                    }
                 }
                 
-                // Обновляем шаги
-                document.getElementById('step2').classList.remove('active');
-                document.getElementById('step2').classList.add('completed');
-                document.getElementById('step3').classList.add('active');
-                
-            } catch (error) {
-                console.error('Error generating output:', error);
-                alert('Произошла ошибка при создании файла. Попробуйте ещё раз.');
-            } finally {
-                hideProgress();
+                const idx = i * 4;
+                blurData[idx] = r / count;
+                blurData[idx + 1] = g / count;
+                blurData[idx + 2] = b / count;
             }
-        }
+        }, (p) => onProgress && onProgress(p * 0.5));
         
-        async function generateFragments() {
-            const sourceImg = state.croppedImage || state.originalImage;
-            const paper = getPaperSize();
-            
-            // Размер фрагмента в пикселях при 150 DPI
-            const dpi = CONFIG.defaultDPI;
-            const fragmentWidth = Math.round((paper.width / CONFIG.mmToInch) * dpi);
-            const fragmentHeight = Math.round((paper.height / CONFIG.mmToInch) * dpi);
-            
-            // Размер исходного фрагмента в пикселях исходного изображения
-            const srcFragmentWidth = sourceImg.naturalWidth / state.gridCols;
-            const srcFragmentHeight = sourceImg.naturalHeight / state.gridRows;
-            
-            // Нахлёст в пикселях
-            const overlapPx = state.enableOverlap 
-                ? Math.round((state.overlapAmount / CONFIG.mmToInch) * dpi)
-                : 0;
-            
-            const fragments = [];
-            
-            for (let row = 0; row < state.gridRows; row++) {
-                for (let col = 0; col < state.gridCols; col++) {
-                    updateProgress(`Обрабатываем фрагмент ${row * state.gridCols + col + 1} из ${state.gridCols * state.gridRows}...`);
-                    
-                    const canvas = document.createElement('canvas');
-                    canvas.width = fragmentWidth + (state.enableOverlap ? overlapPx : 0);
-                    canvas.height = fragmentHeight + (state.enableOverlap ? overlapPx : 0);
-                    
-                    const ctx = canvas.getContext('2d');
-                    ctx.imageSmoothingEnabled = true;
-                    ctx.imageSmoothingQuality = 'high';
-                    
-                    // Белый фон
-                    ctx.fillStyle = 'white';
-                    ctx.fillRect(0, 0, canvas.width, canvas.height);
-                    
-                    // Вычисляем область источника с учётом нахлёста
-                    const srcOverlapX = state.enableOverlap ? (srcFragmentWidth * overlapPx / fragmentWidth) : 0;
-                    const srcOverlapY = state.enableOverlap ? (srcFragmentHeight * overlapPx / fragmentHeight) : 0;
-                    
-                    const srcX = col * srcFragmentWidth;
-                    const srcY = row * srcFragmentHeight;
-                    let srcW = srcFragmentWidth;
-                    let srcH = srcFragmentHeight;
-                    
-                    // Добавляем нахлёст справа и снизу (кроме крайних фрагментов)
-                    if (state.enableOverlap) {
-                        if (col < state.gridCols - 1) srcW += srcOverlapX;
-                        if (row < state.gridRows - 1) srcH += srcOverlapY;
-                    }
-                    
-                    // Отрисовываем фрагмент
-                    ctx.drawImage(
-                        sourceImg,
-                        srcX, srcY, srcW, srcH,
-                        0, 0, canvas.width, canvas.height
-                    );
-                    
-                    // Нумерация
-                    if (state.showNumbers) {
-                        const label = `${String.fromCharCode(65 + row)}${col + 1}`;
-                        ctx.fillStyle = 'rgba(0,0,0,0.7)';
-                        ctx.font = 'bold 48px Arial';
-                        ctx.textAlign = 'center';
-                        ctx.textBaseline = 'middle';
-                        
-                        // Фон для текста
-                        const textWidth = ctx.measureText(label).width;
-                        ctx.fillStyle = 'rgba(255,255,255,0.9)';
-                        ctx.fillRect(
-                            canvas.width/2 - textWidth/2 - 20,
-                            canvas.height/2 - 30,
-                            textWidth + 40,
-                            60
-                        );
-                        
-                        ctx.fillStyle = '#333';
-                        ctx.fillText(label, canvas.width/2, canvas.height/2);
-                    }
-                    
-                    // Конвертируем в blob
-                    const blob = await new Promise(resolve => {
-                        canvas.toBlob(resolve, 'image/jpeg', 0.92);
-                    });
-                    
-                    fragments.push({
-                        row,
-                        col,
-                        label: `${String.fromCharCode(65 + row)}${col + 1}`,
-                        blob,
-                        dataUrl: canvas.toDataURL('image/jpeg', 0.92),
-                        width: canvas.width,
-                        height: canvas.height
-                    });
-                    
-                    // Небольшая задержка для обновления UI
-                    await new Promise(r => setTimeout(r, 10));
+        // Unsharp mask
+        await processInChunks(totalPixels, chunkSize, async (start, end) => {
+            for (let i = start; i < end; i++) {
+                const idx = i * 4;
+                for (let j = 0; j < 3; j++) {
+                    const diff = origData[idx + j] - blurData[idx + j];
+                    origData[idx + j] = Math.max(0, Math.min(255, origData[idx + j] + diff * strength * 2));
                 }
             }
-            
-            return fragments;
-        }
+        }, (p) => onProgress && onProgress(0.5 + p * 0.5));
         
-        async function generateDOCX(fragments) {
-            updateProgress('Создаём DOCX файл...');
+        ctx.putImageData(original, 0, 0);
+    }
+
+    // ============================================
+    // ГЕНЕРАЦИЯ
+    // ============================================
+    async function generateOutput() {
+        if (state.isProcessing) return;
+        state.isProcessing = true;
+        
+        const generateBtn = document.getElementById('generateBtn');
+        generateBtn.disabled = true;
+        
+        showProgress('Подготовка...', 0);
+        
+        try {
+            const fragments = await generateFragments();
             
-            const { Document, Packer, Paragraph, ImageRun, PageOrientation, convertMillimetersToTwip } = docx;
-            
-            const paper = getPaperSize();
-            
-            // Создаём секции для каждого фрагмента
-            const sections = [];
-            
-            for (const fragment of fragments) {
-                const arrayBuffer = await fragment.blob.arrayBuffer();
-                const uint8Array = new Uint8Array(arrayBuffer);
-                
-                sections.push({
-                    properties: {
-                        page: {
-                            size: {
-                                width: convertMillimetersToTwip(paper.width),
-                                height: convertMillimetersToTwip(paper.height),
-                                orientation: state.orientation === 'landscape' 
-                                    ? PageOrientation.LANDSCAPE 
-                                    : PageOrientation.PORTRAIT
-                            },
-                            margin: {
-                                top: convertMillimetersToTwip(5),
-                                right: convertMillimetersToTwip(5),
-                                bottom: convertMillimetersToTwip(5),
-                                left: convertMillimetersToTwip(5)
-                            }
-                        }
-                    },
-                    children: [
-                        new Paragraph({
-                            children: [
-                                new ImageRun({
-                                    data: uint8Array,
-                                    transformation: {
-                                        width: convertMillimetersToTwip(paper.width - 10) / 15, // EMU conversion
-                                        height: convertMillimetersToTwip(paper.height - 10) / 15
-                                    },
-                                    type: 'jpg'
-                                })
-                            ]
-                        })
-                    ]
-                });
+            switch (state.exportFormat) {
+                case 'docx':
+                    await generateDOCX(fragments);
+                    break;
+                case 'pdf':
+                    await generatePDF(fragments);
+                    break;
+                case 'zip':
+                    await generateZIP(fragments);
+                    break;
             }
             
-            const doc = new Document({
-                sections: sections
+            document.getElementById('step2').classList.remove('active');
+            document.getElementById('step2').classList.add('completed');
+            document.getElementById('step3').classList.add('active');
+            
+        } catch (error) {
+            console.error('Generation error:', error);
+            alert('Ошибка: ' + (error.message || 'Неизвестная ошибка'));
+        } finally {
+            hideProgress();
+            generateBtn.disabled = false;
+            state.isProcessing = false;
+        }
+    }
+    
+    async function generateFragments() {
+        const sourceImg = state.originalImage;
+        const paper = getPaperSize();
+        const dpi = state.enableUpscale ? state.targetDPI : 150;
+        
+        // Размер листа в пикселях
+        const sheetWidthPx = Math.round((paper.width / CONFIG.mmToInch) * dpi);
+        const sheetHeightPx = Math.round((paper.height / CONFIG.mmToInch) * dpi);
+        
+        // Нахлёст в пикселях
+        const overlapPx = state.enableOverlap 
+            ? Math.round((state.overlapAmount / CONFIG.mmToInch) * dpi)
+            : 0;
+        
+        // Общий размер
+        const gridWidthPx = sheetWidthPx * state.gridCols;
+        const gridHeightPx = sheetHeightPx * state.gridRows;
+        
+        updateProgress('Создаём полное изображение...', 5);
+        await delay(10);
+        
+        // Создаём большой canvas постера
+        const posterCanvas = document.createElement('canvas');
+        posterCanvas.width = gridWidthPx;
+        posterCanvas.height = gridHeightPx;
+        const posterCtx = posterCanvas.getContext('2d');
+        
+        // Белый фон
+        posterCtx.fillStyle = '#ffffff';
+        posterCtx.fillRect(0, 0, gridWidthPx, gridHeightPx);
+        
+        // Размещение картинки
+        const gridRatio = gridWidthPx / gridHeightPx;
+        const imgRatio = sourceImg.naturalWidth / sourceImg.naturalHeight;
+        
+        let imgDrawWidth, imgDrawHeight, imgDrawX, imgDrawY;
+        
+        if (state.fitMode === 'fit') {
+            if (imgRatio > gridRatio) {
+                imgDrawWidth = gridWidthPx;
+                imgDrawHeight = gridWidthPx / imgRatio;
+            } else {
+                imgDrawHeight = gridHeightPx;
+                imgDrawWidth = gridHeightPx * imgRatio;
+            }
+            imgDrawX = (gridWidthPx - imgDrawWidth) / 2;
+            imgDrawY = (gridHeightPx - imgDrawHeight) / 2;
+        } else {
+            if (imgRatio > gridRatio) {
+                imgDrawHeight = gridHeightPx;
+                imgDrawWidth = gridHeightPx * imgRatio;
+            } else {
+                imgDrawWidth = gridWidthPx;
+                imgDrawHeight = gridWidthPx / imgRatio;
+            }
+            imgDrawX = (gridWidthPx - imgDrawWidth) / 2;
+            imgDrawY = (gridHeightPx - imgDrawHeight) / 2;
+        }
+        
+        updateProgress('Масштабируем изображение...', 10);
+        await delay(10);
+        
+        // Настройка сглаживания
+        if (state.upscalePreset === 'pixel') {
+            posterCtx.imageSmoothingEnabled = false;
+        } else {
+            posterCtx.imageSmoothingEnabled = true;
+            posterCtx.imageSmoothingQuality = 'high';
+        }
+        
+        // Рисуем изображение
+        posterCtx.drawImage(sourceImg, imgDrawX, imgDrawY, imgDrawWidth, imgDrawHeight);
+        
+        // Применяем обработку если апскейл включён
+        if (state.enableUpscale && state.upscalePreset !== 'pixel') {
+            updateProgress('Улучшаем качество...', 15);
+            
+            const imageData = posterCtx.getImageData(0, 0, gridWidthPx, gridHeightPx);
+            
+            await processImageData(imageData, gridWidthPx, gridHeightPx, (p) => {
+                updateProgress('Обрабатываем цвета...', 15 + p * 20);
             });
             
-            const blob = await Packer.toBlob(doc);
-            saveAs(blob, `poster_${state.gridCols}x${state.gridRows}.docx`);
-        }
-        
-        async function generatePDF(fragments) {
-            updateProgress('Создаём PDF файл...');
+            posterCtx.putImageData(imageData, 0, 0);
             
-            const { PDFDocument } = PDFLib;
-            const pdfDoc = await PDFDocument.create();
-            
-            const paper = getPaperSize();
-            const pageWidth = paper.width * CONFIG.mmToPoint;
-            const pageHeight = paper.height * CONFIG.mmToPoint;
-            
-            for (const fragment of fragments) {
-                const page = pdfDoc.addPage([pageWidth, pageHeight]);
-                
-                const arrayBuffer = await fragment.blob.arrayBuffer();
-                const image = await pdfDoc.embedJpg(arrayBuffer);
-                
-                const margin = 5 * CONFIG.mmToPoint;
-                const drawWidth = pageWidth - margin * 2;
-                const drawHeight = pageHeight - margin * 2;
-                
-                page.drawImage(image, {
-                    x: margin,
-                    y: margin,
-                    width: drawWidth,
-                    height: drawHeight
+            if (state.sharpen > 0) {
+                await applySharpening(posterCtx, gridWidthPx, gridHeightPx, state.sharpen, (p) => {
+                    updateProgress('Повышаем резкость...', 35 + p * 15);
                 });
             }
-            
-            const pdfBytes = await pdfDoc.save();
-            const blob = new Blob([pdfBytes], { type: 'application/pdf' });
-            saveAs(blob, `poster_${state.gridCols}x${state.gridRows}.pdf`);
         }
         
-        async function generateZIP(fragments) {
-            updateProgress('Создаём ZIP архив...');
-            
-            const zip = new JSZip();
-            const folder = zip.folder('poster_fragments');
-            
-            for (const fragment of fragments) {
-                folder.file(`${fragment.label}.jpg`, fragment.blob);
+        // Нарезаем на фрагменты
+        const fragments = [];
+        const totalFragments = state.gridCols * state.gridRows;
+        let fragmentIndex = 0;
+        
+        for (let row = 0; row < state.gridRows; row++) {
+            for (let col = 0; col < state.gridCols; col++) {
+                fragmentIndex++;
+                
+                const progress = 50 + (fragmentIndex / totalFragments) * 40;
+                updateProgress(`Создаём фрагмент ${fragmentIndex}/${totalFragments}...`, progress);
+                setProgressDetails(`Строка ${row + 1}, столбец ${col + 1}`);
+                
+                const srcX = col * sheetWidthPx;
+                const srcY = row * sheetHeightPx;
+                
+                // Размер с нахлёстом
+                let fragWidth = sheetWidthPx;
+                let fragHeight = sheetHeightPx;
+                
+                const hasOverlapRight = state.enableOverlap && col < state.gridCols - 1;
+                const hasOverlapBottom = state.enableOverlap && row < state.gridRows - 1;
+                
+                if (hasOverlapRight) fragWidth += overlapPx;
+                if (hasOverlapBottom) fragHeight += overlapPx;
+                
+                // Создаём canvas для фрагмента
+                const fragCanvas = document.createElement('canvas');
+                fragCanvas.width = fragWidth;
+                fragCanvas.height = fragHeight;
+                const fragCtx = fragCanvas.getContext('2d');
+                
+                fragCtx.fillStyle = '#ffffff';
+                fragCtx.fillRect(0, 0, fragWidth, fragHeight);
+                
+                fragCtx.drawImage(
+                    posterCanvas,
+                    srcX, srcY, fragWidth, fragHeight,
+                    0, 0, fragWidth, fragHeight
+                );
+                
+                // Конвертируем в blob
+                const blob = await new Promise((resolve, reject) => {
+                    try {
+                        fragCanvas.toBlob(
+                            (b) => b ? resolve(b) : reject(new Error('Blob creation failed')),
+                            'image/jpeg',
+                            0.92
+                        );
+                    } catch (e) {
+                        reject(e);
+                    }
+                });
+                
+                fragments.push({
+                    row,
+                    col,
+                    label: `${String.fromCharCode(65 + row)}${col + 1}`,
+                    blob,
+                    width: fragWidth,
+                    height: fragHeight,
+                    hasOverlapRight,
+                    hasOverlapBottom
+                });
+                
+                // Очищаем память
+                cleanupCanvas(fragCanvas);
+                
+                await delay(5);
             }
+        }
+        
+        // Очищаем большой canvas
+        cleanupCanvas(posterCanvas);
+        
+        return fragments;
+    }
+    
+    async function generateDOCX(fragments) {
+        updateProgress('Создаём DOCX...', 92);
+        
+        const { Document, Packer, Paragraph, ImageRun, PageOrientation, convertMillimetersToTwip } = docx;
+        
+        const paper = getPaperSize();
+        const sections = [];
+        
+        for (let i = 0; i < fragments.length; i++) {
+            const fragment = fragments[i];
             
-            // Добавляем инструкцию
-            const readme = `Постер ${state.gridCols}x${state.gridRows}
-===================
-
-Фрагменты пронумерованы так:
-- Буква = строка (A = верхняя)
-- Цифра = столбец (1 = левый)
+            setProgressDetails(`Добавляем страницу ${i + 1}/${fragments.length}`);
+            
+            const arrayBuffer = await fragment.blob.arrayBuffer();
+            const uint8Array = new Uint8Array(arrayBuffer);
+            
+            let pageWidth = paper.width;
+            let pageHeight = paper.height;
+            
+            if (fragment.hasOverlapRight) pageWidth += state.overlapAmount;
+            if (fragment.hasOverlapBottom) pageHeight += state.overlapAmount;
+            
+            sections.push({
+                properties: {
+                    page: {
+                        size: {
+                            width: convertMillimetersToTwip(pageWidth),
+                            height: convertMillimetersToTwip(pageHeight),
+                            orientation: state.orientation === 'landscape' 
+                                ? PageOrientation.LANDSCAPE 
+                                : PageOrientation.PORTRAIT
+                        },
+                        margin: { top: 0, right: 0, bottom: 0, left: 0 }
+                    }
+                },
+                children: [
+                    new Paragraph({
+                        children: [
+                            new ImageRun({
+                                data: uint8Array,
+                                transformation: {
+                                    width: convertMillimetersToTwip(pageWidth) / 15,
+                                    height: convertMillimetersToTwip(pageHeight) / 15
+                                },
+                                type: 'jpg'
+                            })
+                        ]
+                    })
+                ]
+            });
+            
+            await delay(5);
+        }
+        
+        updateProgress('Сохраняем файл...', 98);
+        
+        const doc = new Document({ sections });
+        const blob = await Packer.toBlob(doc);
+        saveAs(blob, `poster_${state.gridCols}x${state.gridRows}.docx`);
+    }
+    
+    async function generatePDF(fragments) {
+        updateProgress('Создаём PDF...', 92);
+        
+        const { PDFDocument } = PDFLib;
+        const pdfDoc = await PDFDocument.create();
+        
+        const paper = getPaperSize();
+        
+        for (let i = 0; i < fragments.length; i++) {
+            const fragment = fragments[i];
+            
+            setProgressDetails(`Добавляем страницу ${i + 1}/${fragments.length}`);
+            
+            let pageWidth = paper.width * CONFIG.mmToPoint;
+            let pageHeight = paper.height * CONFIG.mmToPoint;
+            
+            if (fragment.hasOverlapRight) pageWidth += state.overlapAmount * CONFIG.mmToPoint;
+            if (fragment.hasOverlapBottom) pageHeight += state.overlapAmount * CONFIG.mmToPoint;
+            
+            const page = pdfDoc.addPage([pageWidth, pageHeight]);
+            
+            const arrayBuffer = await fragment.blob.arrayBuffer();
+            const image = await pdfDoc.embedJpg(arrayBuffer);
+            
+            page.drawImage(image, {
+                x: 0,
+                y: 0,
+                width: pageWidth,
+                height: pageHeight
+            });
+            
+            await delay(5);
+        }
+        
+        updateProgress('Сохраняем файл...', 98);
+        
+        const pdfBytes = await pdfDoc.save();
+        const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+        saveAs(blob, `poster_${state.gridCols}x${state.gridRows}.pdf`);
+    }
+    
+    async function generateZIP(fragments) {
+        updateProgress('Создаём ZIP...', 92);
+        
+        const zip = new JSZip();
+        const folder = zip.folder('poster');
+        
+        for (let i = 0; i < fragments.length; i++) {
+            const fragment = fragments[i];
+            setProgressDetails(`Добавляем ${fragment.label}.jpg`);
+            folder.file(`${fragment.label}.jpg`, fragment.blob);
+            await delay(5);
+        }
+        
+        // README
+        const readme = `Постер ${state.gridCols}×${state.gridRows}
+================
 
 Сетка сборки:
 ${generateGridMap()}
 
-Формат бумаги: ${state.paperFormat} (${state.orientation === 'portrait' ? 'портрет' : 'альбом'})
+Формат: ${state.paperFormat} (${state.orientation === 'portrait' ? 'портрет' : 'альбом'})
+${state.enableOverlap ? `Нахлёст: ${state.overlapAmount} мм` : 'Без нахлёста'}
 `;
-            folder.file('ИНСТРУКЦИЯ.txt', readme);
-            
-            const blob = await zip.generateAsync({ type: 'blob' });
-            saveAs(blob, `poster_${state.gridCols}x${state.gridRows}.zip`);
-        }
+        folder.file('README.txt', readme);
         
-        function generateGridMap() {
-            let map = '';
-            for (let row = 0; row < state.gridRows; row++) {
-                let rowStr = '';
-                for (let col = 0; col < state.gridCols; col++) {
-                    rowStr += `[${String.fromCharCode(65 + row)}${col + 1}] `;
-                }
-                map += rowStr.trim() + '\n';
+        updateProgress('Сохраняем архив...', 98);
+        
+        const blob = await zip.generateAsync({ 
+            type: 'blob',
+            compression: 'DEFLATE',
+            compressionOptions: { level: 6 }
+        });
+        
+        saveAs(blob, `poster_${state.gridCols}x${state.gridRows}.zip`);
+    }
+    
+    function generateGridMap() {
+        let map = '';
+        for (let row = 0; row < state.gridRows; row++) {
+            let rowStr = '';
+            for (let col = 0; col < state.gridCols; col++) {
+                rowStr += `[${String.fromCharCode(65 + row)}${col + 1}] `;
             }
-            return map;
+            map += rowStr.trim() + '\n';
         }
-        
-        // ============================================
-        // ПРОГРЕСС
-        // ============================================
-        function showProgress(text) {
-            document.getElementById('progressText').textContent = text;
-            document.getElementById('progressOverlay').classList.add('active');
-        }
-        
-        function updateProgress(text) {
-            document.getElementById('progressText').textContent = text;
-        }
-        
-        function hideProgress() {
-            document.getElementById('progressOverlay').classList.remove('active');
-        }
+        return map;
+    }
+
+    // ============================================
+    // ПРОГРЕСС
+    // ============================================
+    function showProgress(text, percent = 0) {
+        document.getElementById('progressText').textContent = text;
+        document.getElementById('progressBar').style.width = percent + '%';
+        document.getElementById('progressDetails').textContent = '';
+        document.getElementById('progressOverlay').classList.add('active');
+    }
+    
+    function updateProgress(text, percent) {
+        document.getElementById('progressText').textContent = text;
+        document.getElementById('progressBar').style.width = percent + '%';
+    }
+    
+    function setProgressDetails(text) {
+        document.getElementById('progressDetails').textContent = text;
+    }
+    
+    function hideProgress() {
+        document.getElementById('progressOverlay').classList.remove('active');
+    }
     </script>
 </body>
-
 </html>
