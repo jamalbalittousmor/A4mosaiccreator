@@ -1,0 +1,1589 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🧩 Постер-Мозаика — Разбивка картинок на листы</title>
+    
+    <!-- Библиотеки -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/docx@8.5.0/build/index.umd.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary: #4A90D9;
+            --primary-hover: #357ABD;
+            --success: #27AE60;
+            --warning: #F39C12;
+            --danger: #E74C3C;
+            --bg: #F5F7FA;
+            --card: #FFFFFF;
+            --text: #2C3E50;
+            --text-light: #7F8C8D;
+            --border: #E1E8ED;
+            --shadow: 0 4px 20px rgba(0,0,0,0.08);
+            --radius: 16px;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            font-size: 18px;
+            line-height: 1.5;
+        }
+        
+        /* Шапка */
+        .header {
+            background: linear-gradient(135deg, var(--primary), #6C5CE7);
+            color: white;
+            padding: 24px;
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+        
+        .header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        
+        .header p {
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+        
+        /* Основной контейнер */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 24px;
+        }
+        
+        /* Шаги */
+        .steps {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            margin-bottom: 32px;
+            flex-wrap: wrap;
+        }
+        
+        .step {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 24px;
+            background: var(--card);
+            border-radius: 50px;
+            box-shadow: var(--shadow);
+            opacity: 0.5;
+            transition: all 0.3s;
+        }
+        
+        .step.active {
+            opacity: 1;
+            background: var(--primary);
+            color: white;
+        }
+        
+        .step.completed {
+            opacity: 1;
+            background: var(--success);
+            color: white;
+        }
+        
+        .step-number {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+        
+        .step.active .step-number,
+        .step.completed .step-number {
+            background: rgba(255,255,255,0.3);
+        }
+        
+        /* Карточки */
+        .card {
+            background: var(--card);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 32px;
+            margin-bottom: 24px;
+        }
+        
+        .card-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .card-title .icon {
+            font-size: 1.6rem;
+        }
+        
+        /* Зона загрузки */
+        .upload-zone {
+            border: 3px dashed var(--border);
+            border-radius: var(--radius);
+            padding: 60px 40px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: linear-gradient(135deg, #f8f9fa, #fff);
+        }
+        
+        .upload-zone:hover,
+        .upload-zone.dragover {
+            border-color: var(--primary);
+            background: linear-gradient(135deg, #e8f4fd, #fff);
+            transform: scale(1.01);
+        }
+        
+        .upload-zone .icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+        
+        .upload-zone h3 {
+            font-size: 1.5rem;
+            margin-bottom: 12px;
+        }
+        
+        .upload-zone p {
+            color: var(--text-light);
+            font-size: 1.1rem;
+        }
+        
+        .upload-zone input {
+            display: none;
+        }
+        
+        /* Двухколоночный макет */
+        .two-columns {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 24px;
+            align-items: start;
+        }
+        
+        @media (max-width: 1000px) {
+            .two-columns {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Превью */
+        .preview-container {
+            position: relative;
+            background: #1a1a2e;
+            border-radius: var(--radius);
+            overflow: hidden;
+            min-height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .preview-wrapper {
+            position: relative;
+            max-width: 100%;
+            max-height: 600px;
+        }
+        
+        .preview-image {
+            max-width: 100%;
+            max-height: 600px;
+            display: block;
+        }
+        
+        .grid-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+        
+        .grid-cell {
+            position: absolute;
+            border: 2px solid rgba(255, 255, 255, 0.8);
+            box-sizing: border-box;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(74, 144, 217, 0.1);
+        }
+        
+        .grid-cell-label {
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+        
+        /* Информация о размере */
+        .size-info {
+            position: absolute;
+            bottom: 16px;
+            left: 16px;
+            right: 16px;
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 16px;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        
+        .size-info-item {
+            text-align: center;
+        }
+        
+        .size-info-label {
+            font-size: 0.85rem;
+            opacity: 0.7;
+            margin-bottom: 4px;
+        }
+        
+        .size-info-value {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+        
+        .quality-good { color: #27AE60; }
+        .quality-medium { color: #F39C12; }
+        .quality-bad { color: #E74C3C; }
+        
+        /* Настройки */
+        .settings-group {
+            margin-bottom: 24px;
+        }
+        
+        .settings-group:last-child {
+            margin-bottom: 0;
+        }
+        
+        .settings-label {
+            font-weight: 600;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1.1rem;
+        }
+        
+        /* Селекторы формата */
+        .format-selector {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+        
+        .format-btn {
+            padding: 14px;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+            font-size: 1rem;
+        }
+        
+        .format-btn:hover {
+            border-color: var(--primary);
+            background: #f0f7ff;
+        }
+        
+        .format-btn.active {
+            border-color: var(--primary);
+            background: var(--primary);
+            color: white;
+        }
+        
+        /* Сетка */
+        .grid-selector {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        
+        .grid-input {
+            width: 70px;
+            padding: 12px;
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            font-size: 1.2rem;
+            text-align: center;
+            font-weight: 600;
+        }
+        
+        .grid-input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        
+        .grid-x {
+            font-size: 1.5rem;
+            font-weight: 300;
+            color: var(--text-light);
+        }
+        
+        .auto-btn {
+            padding: 12px 20px;
+            background: var(--success);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        
+        .auto-btn:hover {
+            background: #219a52;
+            transform: translateY(-2px);
+        }
+        
+        /* Переключатели */
+        .toggle-group {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        
+        .toggle-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px;
+            background: #f8f9fa;
+            border-radius: 12px;
+        }
+        
+        .toggle-label {
+            font-size: 1rem;
+        }
+        
+        .toggle-switch {
+            position: relative;
+            width: 60px;
+            height: 32px;
+            cursor: pointer;
+        }
+        
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .toggle-slider {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: #ccc;
+            border-radius: 32px;
+            transition: 0.3s;
+        }
+        
+        .toggle-slider:before {
+            content: '';
+            position: absolute;
+            width: 26px;
+            height: 26px;
+            left: 3px;
+            bottom: 3px;
+            background: white;
+            border-radius: 50%;
+            transition: 0.3s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .toggle-switch input:checked + .toggle-slider {
+            background: var(--primary);
+        }
+        
+        .toggle-switch input:checked + .toggle-slider:before {
+            transform: translateX(28px);
+        }
+        
+        /* Слайдер нахлёста */
+        .overlap-slider {
+            margin-top: 12px;
+            padding: 16px;
+            background: #e8f4fd;
+            border-radius: 12px;
+            display: none;
+        }
+        
+        .overlap-slider.visible {
+            display: block;
+        }
+        
+        .overlap-slider input[type="range"] {
+            width: 100%;
+            height: 8px;
+            border-radius: 4px;
+            background: #ddd;
+            outline: none;
+            -webkit-appearance: none;
+        }
+        
+        .overlap-slider input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--primary);
+            cursor: pointer;
+        }
+        
+        .overlap-value {
+            text-align: center;
+            margin-top: 8px;
+            font-weight: 600;
+        }
+        
+        /* Кнопки действий */
+        .actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 24px;
+        }
+        
+        .btn {
+            flex: 1;
+            padding: 18px 24px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), #6C5CE7);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(74, 144, 217, 0.4);
+        }
+        
+        .btn-secondary {
+            background: #f0f0f0;
+            color: var(--text);
+        }
+        
+        .btn-secondary:hover {
+            background: #e0e0e0;
+        }
+        
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+        
+        /* Формат экспорта */
+        .export-format {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        /* Модальное окно кроппера */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 1000;
+            padding: 20px;
+        }
+        
+        .modal.active {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 24px;
+            background: white;
+            border-radius: 16px 16px 0 0;
+        }
+        
+        .modal-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+        
+        .modal-close {
+            width: 40px;
+            height: 40px;
+            border: none;
+            background: #f0f0f0;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-body {
+            flex: 1;
+            background: #1a1a2e;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        .modal-body img {
+            max-width: 100%;
+            max-height: 100%;
+        }
+        
+        .modal-footer {
+            display: flex;
+            gap: 12px;
+            padding: 16px 24px;
+            background: white;
+            border-radius: 0 0 16px 16px;
+        }
+        
+        /* Прогресс */
+        .progress-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .progress-overlay.active {
+            display: flex;
+        }
+        
+        .progress-card {
+            background: white;
+            padding: 48px;
+            border-radius: 20px;
+            text-align: center;
+            max-width: 400px;
+        }
+        
+        .progress-spinner {
+            width: 80px;
+            height: 80px;
+            border: 6px solid #f0f0f0;
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 24px;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .progress-text {
+            font-size: 1.2rem;
+            color: var(--text);
+        }
+        
+        /* Скрытый блок */
+        .hidden {
+            display: none !important;
+        }
+        
+        /* Информационные бейджи */
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+        
+        .badge-info {
+            background: #e8f4fd;
+            color: var(--primary);
+        }
+        
+        /* Подсказки */
+        .hint {
+            background: #fffbea;
+            border-left: 4px solid var(--warning);
+            padding: 16px;
+            border-radius: 0 12px 12px 0;
+            margin-top: 16px;
+            font-size: 0.95rem;
+        }
+        
+        .hint-title {
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        
+        /* Футер */
+        .footer {
+            text-align: center;
+            padding: 24px;
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+        
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.5rem;
+            }
+            
+            .steps {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .card {
+                padding: 20px;
+            }
+            
+            .upload-zone {
+                padding: 40px 20px;
+            }
+            
+            .format-selector {
+                grid-template-columns: 1fr;
+            }
+            
+            .export-format {
+                grid-template-columns: 1fr;
+            }
+            
+            .actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Шапка -->
+    <header class="header">
+        <h1>🧩 Постер-Мозаика</h1>
+        <p>Разбейте любую картинку на листы A4 и напечатайте огромный постер!</p>
+    </header>
+    
+    <main class="container">
+        <!-- Шаги -->
+        <div class="steps">
+            <div class="step active" id="step1">
+                <div class="step-number">1</div>
+                <span>Загрузите картинку</span>
+            </div>
+            <div class="step" id="step2">
+                <div class="step-number">2</div>
+                <span>Настройте параметры</span>
+            </div>
+            <div class="step" id="step3">
+                <div class="step-number">3</div>
+                <span>Скачайте и печатайте</span>
+            </div>
+        </div>
+        
+        <!-- Зона загрузки (Шаг 1) -->
+        <div class="card" id="uploadCard">
+            <div class="upload-zone" id="uploadZone">
+                <div class="icon">📁</div>
+                <h3>Перетащите картинку сюда</h3>
+                <p>или нажмите, чтобы выбрать файл</p>
+                <p style="margin-top: 12px;"><span class="badge badge-info">JPG, PNG, WebP до 50 МБ</span></p>
+                <input type="file" id="fileInput" accept="image/*">
+            </div>
+        </div>
+        
+        <!-- Редактор (Шаг 2) -->
+        <div class="hidden" id="editorSection">
+            <div class="two-columns">
+                <!-- Превью -->
+                <div class="card">
+                    <div class="card-title">
+                        <span class="icon">🖼️</span>
+                        Предпросмотр постера
+                    </div>
+                    <div class="preview-container" id="previewContainer">
+                        <div class="preview-wrapper" id="previewWrapper">
+                            <img id="previewImage" class="preview-image" src="" alt="Preview">
+                            <div class="grid-overlay" id="gridOverlay"></div>
+                        </div>
+                        <div class="size-info" id="sizeInfo">
+                            <div class="size-info-item">
+                                <div class="size-info-label">Размер постера</div>
+                                <div class="size-info-value" id="posterSize">—</div>
+                            </div>
+                            <div class="size-info-item">
+                                <div class="size-info-label">Листов</div>
+                                <div class="size-info-value" id="sheetsCount">—</div>
+                            </div>
+                            <div class="size-info-item">
+                                <div class="size-info-label">Качество печати</div>
+                                <div class="size-info-value" id="printQuality">—</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 16px; display: flex; gap: 12px;">
+                        <button class="btn btn-secondary" onclick="openCropper()" style="flex: 1;">
+                            ✂️ Обрезать картинку
+                        </button>
+                        <button class="btn btn-secondary" onclick="resetImage()" style="flex: 1;">
+                            🔄 Загрузить другую
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Настройки -->
+                <div class="card">
+                    <div class="card-title">
+                        <span class="icon">⚙️</span>
+                        Настройки
+                    </div>
+                    
+                    <!-- Формат бумаги -->
+                    <div class="settings-group">
+                        <div class="settings-label">📄 Формат бумаги</div>
+                        <div class="format-selector" id="paperFormat">
+                            <button class="format-btn active" data-format="A4">A4</button>
+                            <button class="format-btn" data-format="A3">A3</button>
+                            <button class="format-btn" data-format="A5">A5</button>
+                            <button class="format-btn" data-format="Letter">Letter</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Ориентация -->
+                    <div class="settings-group">
+                        <div class="settings-label">📐 Ориентация листа</div>
+                        <div class="format-selector" id="orientation">
+                            <button class="format-btn active" data-orientation="portrait">📃 Портрет</button>
+                            <button class="format-btn" data-orientation="landscape">📃 Альбом</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Сетка -->
+                    <div class="settings-group">
+                        <div class="settings-label">🔢 Количество листов</div>
+                        <div class="grid-selector">
+                            <input type="number" class="grid-input" id="gridCols" value="2" min="1" max="20">
+                            <span class="grid-x">×</span>
+                            <input type="number" class="grid-input" id="gridRows" value="2" min="1" max="20">
+                            <button class="auto-btn" onclick="autoGrid()">✨ Авто</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Опции -->
+                    <div class="settings-group">
+                        <div class="settings-label">🎛️ Дополнительно</div>
+                        <div class="toggle-group">
+                            <div class="toggle-item">
+                                <span class="toggle-label">Нумерация фрагментов</span>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="showNumbers">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            <div class="toggle-item">
+                                <span class="toggle-label">Нахлёст для склейки</span>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="enableOverlap">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            <div class="overlap-slider" id="overlapSlider">
+                                <input type="range" id="overlapAmount" min="5" max="30" value="15">
+                                <div class="overlap-value"><span id="overlapValue">15</span> мм</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Формат экспорта -->
+                    <div class="settings-group">
+                        <div class="settings-label">💾 Формат файла</div>
+                        <div class="export-format" id="exportFormat">
+                            <button class="format-btn active" data-export="docx">📄 DOCX</button>
+                            <button class="format-btn" data-export="pdf">📕 PDF</button>
+                            <button class="format-btn" data-export="zip">📦 ZIP</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Кнопка создания -->
+                    <div class="actions">
+                        <button class="btn btn-primary" id="generateBtn" onclick="generateOutput()">
+                            🚀 Создать постер
+                        </button>
+                    </div>
+                    
+                    <div class="hint">
+                        <div class="hint-title">💡 Совет</div>
+                        Для лучшего качества используйте картинки с высоким разрешением. 
+                        Качество "Отлично" означает, что картинка не будет размытой при печати.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <!-- Модальное окно кроппера -->
+    <div class="modal" id="cropperModal">
+        <div class="modal-header">
+            <div class="modal-title">✂️ Обрезка изображения</div>
+            <button class="modal-close" onclick="closeCropper()">×</button>
+        </div>
+        <div class="modal-body">
+            <img id="cropperImage" src="">
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-secondary" style="flex:1" onclick="closeCropper()">Отмена</button>
+            <button class="btn btn-primary" style="flex:1" onclick="applyCrop()">✓ Применить</button>
+        </div>
+    </div>
+    
+    <!-- Прогресс -->
+    <div class="progress-overlay" id="progressOverlay">
+        <div class="progress-card">
+            <div class="progress-spinner"></div>
+            <div class="progress-text" id="progressText">Создаём ваш постер...</div>
+        </div>
+    </div>
+    
+    <footer class="footer">
+        Сделано с ❤️ для любителей больших постеров
+    </footer>
+
+    <script>
+        // ============================================
+        // КОНФИГУРАЦИЯ
+        // ============================================
+        const CONFIG = {
+            paperSizes: {
+                'A4': { width: 210, height: 297 },
+                'A3': { width: 297, height: 420 },
+                'A5': { width: 148, height: 210 },
+                'Letter': { width: 215.9, height: 279.4 }
+            },
+            defaultDPI: 150,
+            maxDPI: 300,
+            mmToInch: 25.4,
+            mmToPoint: 2.83465 // для PDF
+        };
+        
+        // ============================================
+        // СОСТОЯНИЕ ПРИЛОЖЕНИЯ
+        // ============================================
+        let state = {
+            originalImage: null,
+            croppedImage: null,
+            imageWidth: 0,
+            imageHeight: 0,
+            paperFormat: 'A4',
+            orientation: 'portrait',
+            gridCols: 2,
+            gridRows: 2,
+            showNumbers: false,
+            enableOverlap: false,
+            overlapAmount: 15,
+            exportFormat: 'docx',
+            cropper: null
+        };
+        
+        // ============================================
+        // ИНИЦИАЛИЗАЦИЯ
+        // ============================================
+        document.addEventListener('DOMContentLoaded', () => {
+            initUpload();
+            initSettings();
+        });
+        
+        function initUpload() {
+            const uploadZone = document.getElementById('uploadZone');
+            const fileInput = document.getElementById('fileInput');
+            
+            // Клик по зоне
+            uploadZone.addEventListener('click', () => fileInput.click());
+            
+            // Выбор файла
+            fileInput.addEventListener('change', (e) => {
+                if (e.target.files[0]) {
+                    loadImage(e.target.files[0]);
+                }
+            });
+            
+            // Drag & Drop
+            uploadZone.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                uploadZone.classList.add('dragover');
+            });
+            
+            uploadZone.addEventListener('dragleave', () => {
+                uploadZone.classList.remove('dragover');
+            });
+            
+            uploadZone.addEventListener('drop', (e) => {
+                e.preventDefault();
+                uploadZone.classList.remove('dragover');
+                
+                const file = e.dataTransfer.files[0];
+                if (file && file.type.startsWith('image/')) {
+                    loadImage(file);
+                }
+            });
+        }
+        
+        function initSettings() {
+            // Формат бумаги
+            document.querySelectorAll('#paperFormat .format-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('#paperFormat .format-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    state.paperFormat = btn.dataset.format;
+                    updatePreview();
+                });
+            });
+            
+            // Ориентация
+            document.querySelectorAll('#orientation .format-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('#orientation .format-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    state.orientation = btn.dataset.orientation;
+                    updatePreview();
+                });
+            });
+            
+            // Сетка
+            document.getElementById('gridCols').addEventListener('input', (e) => {
+                state.gridCols = Math.max(1, Math.min(20, parseInt(e.target.value) || 1));
+                updatePreview();
+            });
+            
+            document.getElementById('gridRows').addEventListener('input', (e) => {
+                state.gridRows = Math.max(1, Math.min(20, parseInt(e.target.value) || 1));
+                updatePreview();
+            });
+            
+            // Нумерация
+            document.getElementById('showNumbers').addEventListener('change', (e) => {
+                state.showNumbers = e.target.checked;
+                updatePreview();
+            });
+            
+            // Нахлёст
+            document.getElementById('enableOverlap').addEventListener('change', (e) => {
+                state.enableOverlap = e.target.checked;
+                document.getElementById('overlapSlider').classList.toggle('visible', e.target.checked);
+            });
+            
+            document.getElementById('overlapAmount').addEventListener('input', (e) => {
+                state.overlapAmount = parseInt(e.target.value);
+                document.getElementById('overlapValue').textContent = state.overlapAmount;
+            });
+            
+            // Формат экспорта
+            document.querySelectorAll('#exportFormat .format-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('#exportFormat .format-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    state.exportFormat = btn.dataset.export;
+                });
+            });
+        }
+        
+        // ============================================
+        // ЗАГРУЗКА ИЗОБРАЖЕНИЯ
+        // ============================================
+        function loadImage(file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const img = new Image();
+                img.onload = () => {
+                    state.originalImage = img;
+                    state.croppedImage = null;
+                    state.imageWidth = img.naturalWidth;
+                    state.imageHeight = img.naturalHeight;
+                    
+                    // Показываем редактор
+                    document.getElementById('uploadCard').classList.add('hidden');
+                    document.getElementById('editorSection').classList.remove('hidden');
+                    
+                    // Обновляем шаги
+                    document.getElementById('step1').classList.remove('active');
+                    document.getElementById('step1').classList.add('completed');
+                    document.getElementById('step2').classList.add('active');
+                    
+                    // Авто-подбор сетки
+                    autoGrid();
+                    
+                    // Устанавливаем превью
+                    document.getElementById('previewImage').src = e.target.result;
+                    document.getElementById('cropperImage').src = e.target.result;
+                    
+                    setTimeout(updatePreview, 100);
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+        
+        function resetImage() {
+            state.originalImage = null;
+            state.croppedImage = null;
+            
+            document.getElementById('uploadCard').classList.remove('hidden');
+            document.getElementById('editorSection').classList.add('hidden');
+            document.getElementById('fileInput').value = '';
+            
+            // Сбрасываем шаги
+            document.getElementById('step1').classList.add('active');
+            document.getElementById('step1').classList.remove('completed');
+            document.getElementById('step2').classList.remove('active');
+            document.getElementById('step3').classList.remove('active');
+        }
+        
+        // ============================================
+        // АВТО-ПОДБОР СЕТКИ
+        // ============================================
+        function autoGrid() {
+            const paper = getPaperSize();
+            const imgRatio = state.imageWidth / state.imageHeight;
+            const paperRatio = paper.width / paper.height;
+            
+            // Ищем оптимальную сетку (макс 20 листов)
+            let bestCols = 2, bestRows = 2;
+            let bestDiff = Infinity;
+            
+            for (let cols = 1; cols <= 6; cols++) {
+                for (let rows = 1; rows <= 6; rows++) {
+                    const gridRatio = (cols * paper.width) / (rows * paper.height);
+                    const diff = Math.abs(gridRatio - imgRatio);
+                    
+                    if (diff < bestDiff) {
+                        bestDiff = diff;
+                        bestCols = cols;
+                        bestRows = rows;
+                    }
+                }
+            }
+            
+            state.gridCols = bestCols;
+            state.gridRows = bestRows;
+            document.getElementById('gridCols').value = bestCols;
+            document.getElementById('gridRows').value = bestRows;
+            
+            updatePreview();
+        }
+        
+        function getPaperSize() {
+            const size = CONFIG.paperSizes[state.paperFormat];
+            if (state.orientation === 'landscape') {
+                return { width: size.height, height: size.width };
+            }
+            return { width: size.width, height: size.height };
+        }
+        
+        // ============================================
+        // ОБНОВЛЕНИЕ ПРЕВЬЮ
+        // ============================================
+        function updatePreview() {
+            const gridOverlay = document.getElementById('gridOverlay');
+            const previewImage = document.getElementById('previewImage');
+            
+            if (!previewImage.complete || !previewImage.naturalWidth) {
+                setTimeout(updatePreview, 100);
+                return;
+            }
+            
+            // Получаем реальные размеры отображаемой картинки
+            const rect = previewImage.getBoundingClientRect();
+            const displayWidth = previewImage.offsetWidth;
+            const displayHeight = previewImage.offsetHeight;
+            
+            // Очищаем сетку
+            gridOverlay.innerHTML = '';
+            gridOverlay.style.width = displayWidth + 'px';
+            gridOverlay.style.height = displayHeight + 'px';
+            
+            const cellWidth = displayWidth / state.gridCols;
+            const cellHeight = displayHeight / state.gridRows;
+            
+            // Создаём ячейки сетки
+            for (let row = 0; row < state.gridRows; row++) {
+                for (let col = 0; col < state.gridCols; col++) {
+                    const cell = document.createElement('div');
+                    cell.className = 'grid-cell';
+                    cell.style.left = (col * cellWidth) + 'px';
+                    cell.style.top = (row * cellHeight) + 'px';
+                    cell.style.width = cellWidth + 'px';
+                    cell.style.height = cellHeight + 'px';
+                    
+                    if (state.showNumbers) {
+                        const label = document.createElement('span');
+                        label.className = 'grid-cell-label';
+                        label.textContent = `${String.fromCharCode(65 + row)}${col + 1}`;
+                        cell.appendChild(label);
+                    }
+                    
+                    gridOverlay.appendChild(cell);
+                }
+            }
+            
+            // Обновляем информацию
+            updateSizeInfo();
+        }
+        
+        function updateSizeInfo() {
+            const paper = getPaperSize();
+            const totalWidth = (paper.width * state.gridCols) / 10; // в см
+            const totalHeight = (paper.height * state.gridRows) / 10; // в см
+            const totalSheets = state.gridCols * state.gridRows;
+            
+            document.getElementById('posterSize').textContent = 
+                `${totalWidth.toFixed(0)} × ${totalHeight.toFixed(0)} см`;
+            document.getElementById('sheetsCount').textContent = 
+                `${totalSheets} ${getSheetWord(totalSheets)}`;
+            
+            // Расчёт DPI (качества)
+            const totalWidthMM = paper.width * state.gridCols;
+            const totalHeightMM = paper.height * state.gridRows;
+            const totalWidthInch = totalWidthMM / CONFIG.mmToInch;
+            const totalHeightInch = totalHeightMM / CONFIG.mmToInch;
+            
+            const dpiX = state.imageWidth / totalWidthInch;
+            const dpiY = state.imageHeight / totalHeightInch;
+            const dpi = Math.min(dpiX, dpiY);
+            
+            const qualityEl = document.getElementById('printQuality');
+            if (dpi >= 200) {
+                qualityEl.textContent = `Отлично (${Math.round(dpi)} DPI)`;
+                qualityEl.className = 'size-info-value quality-good';
+            } else if (dpi >= 100) {
+                qualityEl.textContent = `Нормально (${Math.round(dpi)} DPI)`;
+                qualityEl.className = 'size-info-value quality-medium';
+            } else {
+                qualityEl.textContent = `Низкое (${Math.round(dpi)} DPI)`;
+                qualityEl.className = 'size-info-value quality-bad';
+            }
+        }
+        
+        function getSheetWord(n) {
+            const lastTwo = n % 100;
+            const lastOne = n % 10;
+            
+            if (lastTwo >= 11 && lastTwo <= 14) return 'листов';
+            if (lastOne === 1) return 'лист';
+            if (lastOne >= 2 && lastOne <= 4) return 'листа';
+            return 'листов';
+        }
+        
+        // ============================================
+        // КРОППЕР
+        // ============================================
+        function openCropper() {
+            const modal = document.getElementById('cropperModal');
+            modal.classList.add('active');
+            
+            const cropperImage = document.getElementById('cropperImage');
+            
+            // Уничтожаем старый кроппер если есть
+            if (state.cropper) {
+                state.cropper.destroy();
+            }
+            
+            // Рассчитываем соотношение сторон на основе сетки
+            const paper = getPaperSize();
+            const aspectRatio = (state.gridCols * paper.width) / (state.gridRows * paper.height);
+            
+            state.cropper = new Cropper(cropperImage, {
+                aspectRatio: aspectRatio,
+                viewMode: 1,
+                dragMode: 'move',
+                autoCropArea: 1,
+                restore: false,
+                guides: true,
+                center: true,
+                highlight: false,
+                cropBoxMovable: true,
+                cropBoxResizable: true,
+                toggleDragModeOnDblclick: false
+            });
+        }
+        
+        function closeCropper() {
+            document.getElementById('cropperModal').classList.remove('active');
+            if (state.cropper) {
+                state.cropper.destroy();
+                state.cropper = null;
+            }
+        }
+        
+        function applyCrop() {
+            if (!state.cropper) return;
+            
+            const canvas = state.cropper.getCroppedCanvas({
+                maxWidth: 8000,
+                maxHeight: 8000,
+                imageSmoothingEnabled: true,
+                imageSmoothingQuality: 'high'
+            });
+            
+            const dataUrl = canvas.toDataURL('image/jpeg', 0.95);
+            
+            // Обновляем изображение
+            document.getElementById('previewImage').src = dataUrl;
+            
+            const img = new Image();
+            img.onload = () => {
+                state.croppedImage = img;
+                state.imageWidth = img.naturalWidth;
+                state.imageHeight = img.naturalHeight;
+                closeCropper();
+                updatePreview();
+            };
+            img.src = dataUrl;
+        }
+        
+        // ============================================
+        // ГЕНЕРАЦИЯ ФАЙЛОВ
+        // ============================================
+        async function generateOutput() {
+            showProgress('Подготовка изображений...');
+            
+            try {
+                const fragments = await generateFragments();
+                
+                switch (state.exportFormat) {
+                    case 'docx':
+                        await generateDOCX(fragments);
+                        break;
+                    case 'pdf':
+                        await generatePDF(fragments);
+                        break;
+                    case 'zip':
+                        await generateZIP(fragments);
+                        break;
+                }
+                
+                // Обновляем шаги
+                document.getElementById('step2').classList.remove('active');
+                document.getElementById('step2').classList.add('completed');
+                document.getElementById('step3').classList.add('active');
+                
+            } catch (error) {
+                console.error('Error generating output:', error);
+                alert('Произошла ошибка при создании файла. Попробуйте ещё раз.');
+            } finally {
+                hideProgress();
+            }
+        }
+        
+        async function generateFragments() {
+            const sourceImg = state.croppedImage || state.originalImage;
+            const paper = getPaperSize();
+            
+            // Размер фрагмента в пикселях при 150 DPI
+            const dpi = CONFIG.defaultDPI;
+            const fragmentWidth = Math.round((paper.width / CONFIG.mmToInch) * dpi);
+            const fragmentHeight = Math.round((paper.height / CONFIG.mmToInch) * dpi);
+            
+            // Размер исходного фрагмента в пикселях исходного изображения
+            const srcFragmentWidth = sourceImg.naturalWidth / state.gridCols;
+            const srcFragmentHeight = sourceImg.naturalHeight / state.gridRows;
+            
+            // Нахлёст в пикселях
+            const overlapPx = state.enableOverlap 
+                ? Math.round((state.overlapAmount / CONFIG.mmToInch) * dpi)
+                : 0;
+            
+            const fragments = [];
+            
+            for (let row = 0; row < state.gridRows; row++) {
+                for (let col = 0; col < state.gridCols; col++) {
+                    updateProgress(`Обрабатываем фрагмент ${row * state.gridCols + col + 1} из ${state.gridCols * state.gridRows}...`);
+                    
+                    const canvas = document.createElement('canvas');
+                    canvas.width = fragmentWidth + (state.enableOverlap ? overlapPx : 0);
+                    canvas.height = fragmentHeight + (state.enableOverlap ? overlapPx : 0);
+                    
+                    const ctx = canvas.getContext('2d');
+                    ctx.imageSmoothingEnabled = true;
+                    ctx.imageSmoothingQuality = 'high';
+                    
+                    // Белый фон
+                    ctx.fillStyle = 'white';
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+                    
+                    // Вычисляем область источника с учётом нахлёста
+                    const srcOverlapX = state.enableOverlap ? (srcFragmentWidth * overlapPx / fragmentWidth) : 0;
+                    const srcOverlapY = state.enableOverlap ? (srcFragmentHeight * overlapPx / fragmentHeight) : 0;
+                    
+                    const srcX = col * srcFragmentWidth;
+                    const srcY = row * srcFragmentHeight;
+                    let srcW = srcFragmentWidth;
+                    let srcH = srcFragmentHeight;
+                    
+                    // Добавляем нахлёст справа и снизу (кроме крайних фрагментов)
+                    if (state.enableOverlap) {
+                        if (col < state.gridCols - 1) srcW += srcOverlapX;
+                        if (row < state.gridRows - 1) srcH += srcOverlapY;
+                    }
+                    
+                    // Отрисовываем фрагмент
+                    ctx.drawImage(
+                        sourceImg,
+                        srcX, srcY, srcW, srcH,
+                        0, 0, canvas.width, canvas.height
+                    );
+                    
+                    // Нумерация
+                    if (state.showNumbers) {
+                        const label = `${String.fromCharCode(65 + row)}${col + 1}`;
+                        ctx.fillStyle = 'rgba(0,0,0,0.7)';
+                        ctx.font = 'bold 48px Arial';
+                        ctx.textAlign = 'center';
+                        ctx.textBaseline = 'middle';
+                        
+                        // Фон для текста
+                        const textWidth = ctx.measureText(label).width;
+                        ctx.fillStyle = 'rgba(255,255,255,0.9)';
+                        ctx.fillRect(
+                            canvas.width/2 - textWidth/2 - 20,
+                            canvas.height/2 - 30,
+                            textWidth + 40,
+                            60
+                        );
+                        
+                        ctx.fillStyle = '#333';
+                        ctx.fillText(label, canvas.width/2, canvas.height/2);
+                    }
+                    
+                    // Конвертируем в blob
+                    const blob = await new Promise(resolve => {
+                        canvas.toBlob(resolve, 'image/jpeg', 0.92);
+                    });
+                    
+                    fragments.push({
+                        row,
+                        col,
+                        label: `${String.fromCharCode(65 + row)}${col + 1}`,
+                        blob,
+                        dataUrl: canvas.toDataURL('image/jpeg', 0.92),
+                        width: canvas.width,
+                        height: canvas.height
+                    });
+                    
+                    // Небольшая задержка для обновления UI
+                    await new Promise(r => setTimeout(r, 10));
+                }
+            }
+            
+            return fragments;
+        }
+        
+        async function generateDOCX(fragments) {
+            updateProgress('Создаём DOCX файл...');
+            
+            const { Document, Packer, Paragraph, ImageRun, PageOrientation, convertMillimetersToTwip } = docx;
+            
+            const paper = getPaperSize();
+            
+            // Создаём секции для каждого фрагмента
+            const sections = [];
+            
+            for (const fragment of fragments) {
+                const arrayBuffer = await fragment.blob.arrayBuffer();
+                const uint8Array = new Uint8Array(arrayBuffer);
+                
+                sections.push({
+                    properties: {
+                        page: {
+                            size: {
+                                width: convertMillimetersToTwip(paper.width),
+                                height: convertMillimetersToTwip(paper.height),
+                                orientation: state.orientation === 'landscape' 
+                                    ? PageOrientation.LANDSCAPE 
+                                    : PageOrientation.PORTRAIT
+                            },
+                            margin: {
+                                top: convertMillimetersToTwip(5),
+                                right: convertMillimetersToTwip(5),
+                                bottom: convertMillimetersToTwip(5),
+                                left: convertMillimetersToTwip(5)
+                            }
+                        }
+                    },
+                    children: [
+                        new Paragraph({
+                            children: [
+                                new ImageRun({
+                                    data: uint8Array,
+                                    transformation: {
+                                        width: convertMillimetersToTwip(paper.width - 10) / 15, // EMU conversion
+                                        height: convertMillimetersToTwip(paper.height - 10) / 15
+                                    },
+                                    type: 'jpg'
+                                })
+                            ]
+                        })
+                    ]
+                });
+            }
+            
+            const doc = new Document({
+                sections: sections
+            });
+            
+            const blob = await Packer.toBlob(doc);
+            saveAs(blob, `poster_${state.gridCols}x${state.gridRows}.docx`);
+        }
+        
+        async function generatePDF(fragments) {
+            updateProgress('Создаём PDF файл...');
+            
+            const { PDFDocument } = PDFLib;
+            const pdfDoc = await PDFDocument.create();
+            
+            const paper = getPaperSize();
+            const pageWidth = paper.width * CONFIG.mmToPoint;
+            const pageHeight = paper.height * CONFIG.mmToPoint;
+            
+            for (const fragment of fragments) {
+                const page = pdfDoc.addPage([pageWidth, pageHeight]);
+                
+                const arrayBuffer = await fragment.blob.arrayBuffer();
+                const image = await pdfDoc.embedJpg(arrayBuffer);
+                
+                const margin = 5 * CONFIG.mmToPoint;
+                const drawWidth = pageWidth - margin * 2;
+                const drawHeight = pageHeight - margin * 2;
+                
+                page.drawImage(image, {
+                    x: margin,
+                    y: margin,
+                    width: drawWidth,
+                    height: drawHeight
+                });
+            }
+            
+            const pdfBytes = await pdfDoc.save();
+            const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+            saveAs(blob, `poster_${state.gridCols}x${state.gridRows}.pdf`);
+        }
+        
+        async function generateZIP(fragments) {
+            updateProgress('Создаём ZIP архив...');
+            
+            const zip = new JSZip();
+            const folder = zip.folder('poster_fragments');
+            
+            for (const fragment of fragments) {
+                folder.file(`${fragment.label}.jpg`, fragment.blob);
+            }
+            
+            // Добавляем инструкцию
+            const readme = `Постер ${state.gridCols}x${state.gridRows}
+===================
+
+Фрагменты пронумерованы так:
+- Буква = строка (A = верхняя)
+- Цифра = столбец (1 = левый)
+
+Сетка сборки:
+${generateGridMap()}
+
+Формат бумаги: ${state.paperFormat} (${state.orientation === 'portrait' ? 'портрет' : 'альбом'})
+`;
+            folder.file('ИНСТРУКЦИЯ.txt', readme);
+            
+            const blob = await zip.generateAsync({ type: 'blob' });
+            saveAs(blob, `poster_${state.gridCols}x${state.gridRows}.zip`);
+        }
+        
+        function generateGridMap() {
+            let map = '';
+            for (let row = 0; row < state.gridRows; row++) {
+                let rowStr = '';
+                for (let col = 0; col < state.gridCols; col++) {
+                    rowStr += `[${String.fromCharCode(65 + row)}${col + 1}] `;
+                }
+                map += rowStr.trim() + '\n';
+            }
+            return map;
+        }
+        
+        // ============================================
+        // ПРОГРЕСС
+        // ============================================
+        function showProgress(text) {
+            document.getElementById('progressText').textContent = text;
+            document.getElementById('progressOverlay').classList.add('active');
+        }
+        
+        function updateProgress(text) {
+            document.getElementById('progressText').textContent = text;
+        }
+        
+        function hideProgress() {
+            document.getElementById('progressOverlay').classList.remove('active');
+        }
+    </script>
+</body>
+</html>
